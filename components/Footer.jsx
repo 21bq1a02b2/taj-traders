@@ -1,169 +1,158 @@
 import React from 'react';
-import { Sparkles, Phone, Mail, MapPin, ShieldCheck, Truck, RefreshCw } from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
 
 export default function Footer({ onSelectCategory }) {
   const categories = [
-    'Skin Care',
-    'Hair Care',
     'Makeup',
-    'Barber & Grooming',
-    'Professional Equipment',
+    'Salon Furniture',
+    'Hair Care',
+    'Hair Color & Treatment',
+    'Skin Care',
     'Waxing',
-    'Fragrance',
-    'Bath & Body',
+    'Professional Equipment',
+    'Barber Supplies',
   ];
 
   return (
-    <footer className="bg-slate-950 text-slate-300 pt-16 pb-8 border-t border-slate-800 mt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Value Prop Badges */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 pb-12 border-b border-slate-800 text-xs">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-rose-600/20 text-rose-400 flex items-center justify-center shrink-0">
-              <Truck className="w-5 h-5" />
-            </div>
-            <div>
-              <h4 className="font-bold text-white text-sm">Pan-India Delivery</h4>
-              <p className="text-slate-400">Fast doorstep courier shipping</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
-              <ShieldCheck className="w-5 h-5" />
-            </div>
-            <div>
-              <h4 className="font-bold text-white text-sm">100% Genuine Brands</h4>
-              <p className="text-slate-400">Directly sourced salon cosmetics</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
-              <Sparkles className="w-5 h-5" />
-            </div>
-            <div>
-              <h4 className="font-bold text-white text-sm">Wholesale Slabs</h4>
-              <p className="text-slate-400">Extra savings for salon & parlours</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0">
-              <RefreshCw className="w-5 h-5" />
-            </div>
-            <div>
-              <h4 className="font-bold text-white text-sm">Easy Inquiries</h4>
-              <p className="text-slate-400">Instant WhatsApp order quotes</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Footer Navigation Links */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 py-12">
+    <footer className="mt-auto border-t border-slate-200 bg-slate-50">
+      <div className="container-page py-12">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand Info */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-rose-600 via-pink-600 to-amber-400 flex items-center justify-center text-white shadow-md shadow-rose-900/40">
-                <Sparkles className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="font-extrabold text-xl text-white tracking-tight uppercase">
+          <div>
+            <a className="group flex items-center gap-2.5" href="/">
+              <span
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-700 text-sm font-bold text-white shadow-sm"
+                aria-hidden="true"
+              >
+                TT
+              </span>
+              <span className="flex flex-col leading-none">
+                <span className="text-[15px] font-semibold tracking-tight text-slate-900">
                   Taj Traders
                 </span>
-                <span className="block text-[10px] text-rose-400 font-bold tracking-wider uppercase">
-                  Cosmetics & Salon Supplies
+                <span className="mt-0.5 text-[10px] font-medium uppercase tracking-wider text-slate-500">
+                  Salon &amp; Parlour Supplies
                 </span>
-              </div>
-            </div>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Taj Traders is India's premier digital cosmetics marketplace for professional beauty salons, spas, bridal artists, barbers, and skincare enthusiasts.
+              </span>
+            </a>
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-slate-600">
+              Professional salon, parlour, beauty and spa supplies for businesses of every size.
             </p>
-            <div className="text-xs text-slate-400 space-y-1">
-              <p className="flex items-center gap-2">
-                <MapPin className="w-3.5 h-3.5 text-rose-500" /> Commercial Market & Pan-India Hub
-              </p>
-              <p className="flex items-center gap-2">
-                <Phone className="w-3.5 h-3.5 text-emerald-400" /> +91 98765 43210 (Mon-Sat 10am-8pm)
-              </p>
-              <p className="flex items-center gap-2">
-                <Mail className="w-3.5 h-3.5 text-blue-400" /> support@tajtraders.com
+            <div className="mt-5 space-y-2">
+              <a
+                href="https://wa.me/919966335074?text=Hello%20Taj%20Traders%2C%20I%27d%20like%20to%20enquire%20about%20your%20products."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-medium transition-colors border border-slate-300 bg-white text-slate-800 hover:bg-slate-50"
+              >
+                <MessageCircle className="h-4 w-4" />
+                <span>WhatsApp Us</span>
+              </a>
+              <p className="text-xs font-medium text-slate-700">
+                WhatsApp / Call:{' '}
+                <a
+                  href="https://wa.me/919160050697"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-emerald-700 hover:underline"
+                >
+                  +91 91600 50697
+                </a>
               </p>
             </div>
           </div>
 
-          {/* Categories Column */}
-          <div className="space-y-3">
-            <h4 className="font-bold text-white text-sm tracking-wider uppercase">
-              Beauty Categories
-            </h4>
-            <ul className="space-y-2 text-xs">
-              {categories.slice(0, 5).map((cat) => (
-                <li key={cat}>
-                  <button
-                    onClick={() => {
-                      onSelectCategory(cat);
-                      window.scrollTo({ top: 380, behavior: 'smooth' });
-                    }}
-                    className="hover:text-rose-400 transition-colors text-slate-400"
-                  >
-                    {cat}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* More Categories */}
-          <div className="space-y-3">
-            <h4 className="font-bold text-white text-sm tracking-wider uppercase">
-              Professional Supplies
-            </h4>
-            <ul className="space-y-2 text-xs">
-              {categories.slice(5).map((cat) => (
-                <li key={cat}>
-                  <button
-                    onClick={() => {
-                      onSelectCategory(cat);
-                      window.scrollTo({ top: 380, behavior: 'smooth' });
-                    }}
-                    className="hover:text-rose-400 transition-colors text-slate-400"
-                  >
-                    {cat}
-                  </button>
-                </li>
-              ))}
+          {/* Shop Column */}
+          <div>
+            <h3 className="text-sm font-semibold text-slate-900">Shop</h3>
+            <ul className="mt-4 space-y-2.5 text-sm">
               <li>
-                <span className="text-amber-400 text-[11px] font-semibold">
-                  ★ GST Invoices provided for Salon Input Tax Credit
-                </span>
+                <button
+                  onClick={() => onSelectCategory('All')}
+                  className="link-muted"
+                >
+                  All Products
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => onSelectCategory('All')}
+                  className="link-muted"
+                >
+                  Categories
+                </button>
+              </li>
+              <li>
+                <a className="link-muted" href="#offers">
+                  Offers
+                </a>
+              </li>
+              <li>
+                <a className="link-muted" href="#bulk-orders">
+                  Bulk Orders
+                </a>
               </li>
             </ul>
           </div>
 
-          {/* Bulk Inquiries */}
-          <div className="space-y-3">
-            <h4 className="font-bold text-white text-sm tracking-wider uppercase">
-              Wholesale & Parlours
-            </h4>
-            <p className="text-xs text-slate-400">
-              Running a salon or beauty academy? Contact our wholesale desk for tier discount quotes and custom product bundles.
-            </p>
-            <a
-              href="https://wa.me/919876543210?text=Hello%20Taj%20Traders,%20I%20am%20a%20salon%20owner%20interested%20in%20bulk%20supply"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition-colors shadow-sm"
-            >
-              <Phone className="w-3.5 h-3.5" />
-              WhatsApp Wholesale Team
-            </a>
+          {/* Categories Column */}
+          <div>
+            <h3 className="text-sm font-semibold text-slate-900">Categories</h3>
+            <ul className="mt-4 space-y-2.5 text-sm">
+              {categories.map((cat) => (
+                <li key={cat}>
+                  <button
+                    onClick={() => {
+                      onSelectCategory(cat);
+                      window.scrollTo({ top: 380, behavior: 'smooth' });
+                    }}
+                    className="link-muted"
+                  >
+                    {cat}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Company Column */}
+          <div>
+            <h3 className="text-sm font-semibold text-slate-900">Company</h3>
+            <ul className="mt-4 space-y-2.5 text-sm">
+              <li>
+                <a className="link-muted" href="#about">
+                  About Us
+                </a>
+              </li>
+              <li>
+                <a className="link-muted" href="#contact">
+                  Contact
+                </a>
+              </li>
+              <li>
+                <a className="link-muted" href="#orders">
+                  Track Order
+                </a>
+              </li>
+              <li>
+                <a className="link-muted" href="#account">
+                  My Account
+                </a>
+              </li>
+            </ul>
+            <div className="mt-6 space-y-1 text-sm text-slate-600">
+              <p className="font-medium text-slate-900">Payment</p>
+              <p>Cash on Delivery available</p>
+            </div>
           </div>
         </div>
+      </div>
 
-        {/* Bottom Copyright */}
-        <div className="pt-8 border-t border-slate-900 text-center text-xs text-slate-500">
-          <p>&copy; {new Date().getFullYear()} Taj Traders. All rights reserved.</p>
+      {/* Bottom Copyright Row */}
+      <div className="border-t border-slate-200">
+        <div className="container-page flex flex-col items-center justify-between gap-2 py-5 text-xs text-slate-500 sm:flex-row">
+          <p>© {new Date().getFullYear()} Taj Traders. All rights reserved.</p>
+          <p>B2B salon, parlour, spa &amp; beauty supplies · GST invoicing available</p>
         </div>
       </div>
     </footer>

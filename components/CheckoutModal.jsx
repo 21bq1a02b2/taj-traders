@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 import {
   X,
   CheckCircle,
-  Truck,
-  CreditCard,
   Banknote,
+  CreditCard,
   Smartphone,
-  ShieldCheck,
   ShoppingBag,
   ArrowRight,
   Loader2,
@@ -28,7 +26,7 @@ export default function CheckoutModal({
     state: 'Telangana',
     pincode: '',
     paymentMethod: 'Cash on Delivery',
-    orderType: 'Retail',
+    orderType: 'Wholesale Bulk',
     notes: '',
   });
 
@@ -38,8 +36,7 @@ export default function CheckoutModal({
 
   if (!isOpen) return null;
 
-  // Calculate Subtotal & Total
-  const FREE_SHIPPING_THRESHOLD = 1999;
+  const FREE_SHIPPING_THRESHOLD = 5000;
   let subtotal = 0;
   cartItems.forEach((item) => {
     const isWholesale =
@@ -69,7 +66,7 @@ export default function CheckoutModal({
       const orderPayload = {
         ...formData,
         items: cartItems.map((item) => ({
-          product: item._id,
+          product: item._id || item.id,
           name: item.name,
           image: item.image,
           price:
@@ -100,9 +97,9 @@ export default function CheckoutModal({
         {/* Modal Header */}
         <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
           <div className="flex items-center gap-2">
-            <ShoppingBag className="w-5 h-5 text-rose-600" />
+            <ShoppingBag className="w-5 h-5 text-brand-700" />
             <h2 className="font-bold text-slate-900 text-lg">
-              {completedOrder ? 'Order Confirmed!' : 'Checkout & Delivery Details'}
+              {completedOrder ? 'Order Confirmed!' : 'Taj Traders Checkout & Delivery'}
             </h2>
           </div>
 
@@ -121,9 +118,9 @@ export default function CheckoutModal({
               <CheckCircle className="w-10 h-10" />
             </div>
 
-            <h3 className="text-2xl font-black text-slate-900">Thank You for Your Order!</h3>
+            <h3 className="text-2xl font-black text-slate-900">Thank You for Ordering with Taj Traders!</h3>
             <p className="text-xs text-slate-500 max-w-md mx-auto">
-              Your order has been recorded in the database. Our dispatch team will process and ship your beauty supplies promptly.
+              Your order has been saved in the database. Our warehouse dispatch team will contact you on WhatsApp / Phone to confirm shipping.
             </p>
 
             <div className="bg-slate-50 p-4 rounded-2xl max-w-sm mx-auto text-left text-xs space-y-2 border border-slate-200">
@@ -137,7 +134,7 @@ export default function CheckoutModal({
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-500">Total Amount:</span>
-                <span className="font-black text-rose-600 text-sm">
+                <span className="font-black text-brand-700 text-sm">
                   ₹{completedOrder.totalAmount?.toLocaleString()}
                 </span>
               </div>
@@ -156,7 +153,7 @@ export default function CheckoutModal({
             <div className="pt-2">
               <button
                 onClick={onClose}
-                className="px-6 py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl text-xs transition-colors shadow-sm"
+                className="px-6 py-2.5 bg-brand-700 hover:bg-brand-800 text-white font-bold rounded-xl text-xs transition-colors shadow-sm"
               >
                 Continue Shopping
               </button>
@@ -171,8 +168,19 @@ export default function CheckoutModal({
               </div>
             )}
 
-            {/* Order Type Pill */}
+            {/* Order Type */}
             <div className="flex items-center gap-2 p-1 bg-slate-100 rounded-xl">
+              <button
+                type="button"
+                onClick={() => setFormData({ ...formData, orderType: 'Wholesale Bulk' })}
+                className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all ${
+                  formData.orderType === 'Wholesale Bulk'
+                    ? 'bg-brand-700 text-white shadow-sm'
+                    : 'text-slate-500 hover:text-slate-800'
+                }`}
+              >
+                Salon &amp; Parlour Wholesale Order
+              </button>
               <button
                 type="button"
                 onClick={() => setFormData({ ...formData, orderType: 'Retail' })}
@@ -184,33 +192,22 @@ export default function CheckoutModal({
               >
                 Retail / Personal Order
               </button>
-              <button
-                type="button"
-                onClick={() => setFormData({ ...formData, orderType: 'Wholesale Bulk' })}
-                className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all ${
-                  formData.orderType === 'Wholesale Bulk'
-                    ? 'bg-rose-600 text-white shadow-sm'
-                    : 'text-slate-500 hover:text-slate-800'
-                }`}
-              >
-                Wholesale / Salon Parlour Order
-              </button>
             </div>
 
-            {/* Customer Details Inputs */}
+            {/* Inputs */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
               <div>
                 <label className="block text-slate-700 font-bold mb-1">
-                  Full Name *
+                  Full Name / Salon Name *
                 </label>
                 <input
                   type="text"
                   name="customerName"
-                  placeholder="e.g. Priya Sharma / Glamour Salon"
+                  placeholder="e.g. Royal Beauty Parlour / Imran Khan"
                   value={formData.customerName}
                   onChange={handleChange}
                   required
-                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-rose-500 focus:bg-white outline-none"
+                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-brand-600 focus:bg-white outline-none"
                 />
               </div>
 
@@ -221,11 +218,11 @@ export default function CheckoutModal({
                 <input
                   type="tel"
                   name="phone"
-                  placeholder="e.g. 9876543210"
+                  placeholder="e.g. 9966335074"
                   value={formData.phone}
                   onChange={handleChange}
                   required
-                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-rose-500 focus:bg-white outline-none"
+                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-brand-600 focus:bg-white outline-none"
                 />
               </div>
 
@@ -240,7 +237,7 @@ export default function CheckoutModal({
                   value={formData.address}
                   onChange={handleChange}
                   required
-                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-rose-500 focus:bg-white outline-none"
+                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-brand-600 focus:bg-white outline-none"
                 />
               </div>
 
@@ -255,7 +252,7 @@ export default function CheckoutModal({
                   value={formData.city}
                   onChange={handleChange}
                   required
-                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-rose-500 focus:bg-white outline-none"
+                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-brand-600 focus:bg-white outline-none"
                 />
               </div>
 
@@ -270,15 +267,15 @@ export default function CheckoutModal({
                   value={formData.pincode}
                   onChange={handleChange}
                   required
-                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-rose-500 focus:bg-white outline-none"
+                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-brand-600 focus:bg-white outline-none"
                 />
               </div>
             </div>
 
-            {/* Payment Method Selector */}
+            {/* Payment Method */}
             <div className="space-y-2">
               <label className="block text-slate-700 font-bold text-xs">
-                Select Payment Mode:
+                Payment Option:
               </label>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
                 {[
@@ -295,7 +292,7 @@ export default function CheckoutModal({
                       onClick={() => setFormData({ ...formData, paymentMethod: mode.id })}
                       className={`flex flex-col items-center justify-center p-3 rounded-xl border text-center transition-all ${
                         isSelected
-                          ? 'border-rose-600 bg-rose-50 text-rose-700 font-bold shadow-sm'
+                          ? 'border-brand-700 bg-brand-50 text-brand-800 font-bold shadow-sm'
                           : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
                       }`}
                     >
@@ -307,7 +304,7 @@ export default function CheckoutModal({
               </div>
             </div>
 
-            {/* Order Price Summary */}
+            {/* Summary */}
             <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-1.5 text-xs">
               <div className="flex justify-between text-slate-500">
                 <span>Items Subtotal ({cartItems.length} products):</span>
@@ -321,15 +318,15 @@ export default function CheckoutModal({
               </div>
               <div className="flex justify-between text-sm font-black text-slate-900 pt-1.5 border-t border-slate-200">
                 <span>Total Payable:</span>
-                <span className="text-rose-600">₹{totalAmount.toLocaleString()}</span>
+                <span className="text-brand-700">₹{totalAmount.toLocaleString()}</span>
               </div>
             </div>
 
-            {/* Submit Button */}
+            {/* Submit */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center gap-2 py-3.5 bg-rose-600 hover:bg-rose-700 active:scale-98 text-white font-bold rounded-xl text-sm shadow-lg shadow-rose-200 transition-all disabled:opacity-50"
+              className="w-full flex items-center justify-center gap-2 py-3.5 bg-brand-700 hover:bg-brand-800 active:scale-98 text-white font-bold rounded-xl text-sm shadow-lg shadow-brand-200 transition-all disabled:opacity-50"
             >
               {loading ? (
                 <>

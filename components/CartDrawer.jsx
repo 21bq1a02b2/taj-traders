@@ -8,7 +8,6 @@ import {
   ArrowRight,
   Truck,
   MessageCircle,
-  Tag,
 } from 'lucide-react';
 
 export default function CartDrawer({
@@ -21,8 +20,7 @@ export default function CartDrawer({
 }) {
   if (!isOpen) return null;
 
-  // Calculate pricing considering wholesale tier discount
-  const FREE_SHIPPING_THRESHOLD = 1999;
+  const FREE_SHIPPING_THRESHOLD = 5000;
 
   let subtotal = 0;
   let regularSubtotal = 0;
@@ -41,9 +39,8 @@ export default function CartDrawer({
   const remainingForFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
   const progressPercent = Math.min(100, Math.round((subtotal / FREE_SHIPPING_THRESHOLD) * 100));
 
-  // WhatsApp order summary generator
   const generateWhatsAppMessage = () => {
-    let msg = `*Cosmetics Pro - New Order Inquiry*\n\n`;
+    let msg = `*Taj Traders - New Product Order Inquiry*\n\n`;
     cartItems.forEach((item, idx) => {
       const isWs =
         item.wholesaleTierPrice &&
@@ -52,8 +49,8 @@ export default function CartDrawer({
       msg += `${idx + 1}. *${item.name}*\n   Qty: ${item.quantity} | Rate: ₹${rate} | Subtotal: ₹${rate * item.quantity}\n`;
     });
     msg += `\n*Total Amount:* ₹${subtotal.toLocaleString()}\n`;
-    msg += `Shipping: ${isFreeShipping ? 'FREE' : '₹99 standard'}\n`;
-    msg += `Please process my order!`;
+    msg += `Delivery: Pan-India | Free shipping on wholesale\n`;
+    msg += `Please confirm my order with Taj Traders!`;
     return encodeURIComponent(msg);
   };
 
@@ -63,9 +60,9 @@ export default function CartDrawer({
         {/* Drawer Header */}
         <div className="p-4 sm:p-5 border-b border-slate-200 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <ShoppingBag className="w-5 h-5 text-rose-600" />
-            <h2 className="font-bold text-slate-900 text-lg">Shopping Cart</h2>
-            <span className="bg-rose-100 text-rose-700 text-xs font-bold px-2 py-0.5 rounded-full">
+            <ShoppingBag className="w-5 h-5 text-brand-700" />
+            <h2 className="font-bold text-slate-900 text-lg">Your Cart</h2>
+            <span className="bg-brand-100 text-brand-800 text-xs font-bold px-2 py-0.5 rounded-full">
               {cartItems.reduce((acc, i) => acc + i.quantity, 0)} items
             </span>
           </div>
@@ -78,23 +75,23 @@ export default function CartDrawer({
           </button>
         </div>
 
-        {/* Free Shipping Progress Indicator */}
-        <div className="bg-rose-50/60 p-3 px-5 border-b border-rose-100 text-xs">
+        {/* Free Shipping Indicator */}
+        <div className="bg-brand-50 p-3 px-5 border-b border-brand-100 text-xs">
           <div className="flex items-center justify-between font-medium text-slate-700 mb-1.5">
             <span className="flex items-center gap-1.5">
-              <Truck className="w-4 h-4 text-rose-600" />
+              <Truck className="w-4 h-4 text-brand-700" />
               {isFreeShipping ? (
-                <strong className="text-emerald-700">You unlocked FREE Pan-India Delivery! 🎉</strong>
+                <strong className="text-emerald-700">Free Pan-India Delivery Unlocked! 🎉</strong>
               ) : (
-                <span>Add <strong>₹{remainingForFreeShipping}</strong> more for Free Shipping</span>
+                <span>Add <strong>₹{remainingForFreeShipping}</strong> more for Free Shipping above ₹5,000</span>
               )}
             </span>
             <span className="font-bold text-slate-900">{progressPercent}%</span>
           </div>
-          <div className="w-full h-1.5 bg-rose-200 rounded-full overflow-hidden">
+          <div className="w-full h-1.5 bg-brand-200 rounded-full overflow-hidden">
             <div
               className={`h-full transition-all duration-300 ${
-                isFreeShipping ? 'bg-emerald-500' : 'bg-rose-600'
+                isFreeShipping ? 'bg-emerald-500' : 'bg-brand-700'
               }`}
               style={{ width: `${progressPercent}%` }}
             />
@@ -105,16 +102,16 @@ export default function CartDrawer({
         <div className="flex-1 overflow-y-auto p-4 sm:p-5 divide-y divide-slate-100">
           {cartItems.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center p-6 space-y-3">
-              <div className="w-16 h-16 bg-rose-50 rounded-full flex items-center justify-center text-rose-400">
+              <div className="w-16 h-16 bg-brand-50 rounded-full flex items-center justify-center text-brand-400">
                 <ShoppingBag className="w-8 h-8" />
               </div>
               <h3 className="font-bold text-slate-800 text-base">Your Cart is Empty</h3>
               <p className="text-xs text-slate-400 max-w-xs">
-                Explore our professional salon, skincare, and beauty makeup catalog to add products.
+                Explore Taj Traders professional salon, parlour, and barber catalog to add products.
               </p>
               <button
                 onClick={onClose}
-                className="mt-2 px-5 py-2 bg-rose-600 text-white text-xs font-semibold rounded-xl hover:bg-rose-700 transition-colors"
+                className="mt-2 px-5 py-2 bg-brand-700 text-white text-xs font-semibold rounded-xl hover:bg-brand-800 transition-colors"
               >
                 Browse Products
               </button>
@@ -127,7 +124,7 @@ export default function CartDrawer({
               const unitPrice = isWholesale ? item.wholesaleTierPrice : item.price;
 
               return (
-                <div key={item._id} className="py-3 flex gap-3 items-center">
+                <div key={item._id || item.id} className="py-3 flex gap-3 items-center">
                   <img
                     src={item.image}
                     alt={item.name}
@@ -135,7 +132,7 @@ export default function CartDrawer({
                   />
 
                   <div className="flex-1 min-w-0 space-y-1">
-                    <p className="text-[10px] text-rose-600 font-bold uppercase truncate">
+                    <p className="text-[10px] text-brand-700 font-bold uppercase truncate">
                       {item.brand}
                     </p>
                     <h4 className="text-xs font-bold text-slate-800 line-clamp-1">
@@ -148,16 +145,15 @@ export default function CartDrawer({
                       </span>
                       {isWholesale && (
                         <span className="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-1.5 py-0.2 rounded">
-                          Wholesale Applied
+                          Wholesale Rate
                         </span>
                       )}
                     </div>
 
-                    {/* Qty Controls */}
                     <div className="flex items-center gap-3 pt-1">
                       <div className="flex items-center border border-slate-200 rounded-lg bg-slate-50">
                         <button
-                          onClick={() => onUpdateQty(item._id, item.quantity - 1)}
+                          onClick={() => onUpdateQty(item._id || item.id, item.quantity - 1)}
                           className="p-1 hover:bg-slate-200 text-slate-600 rounded-l"
                         >
                           <Minus className="w-3 h-3" />
@@ -166,7 +162,7 @@ export default function CartDrawer({
                           {item.quantity}
                         </span>
                         <button
-                          onClick={() => onUpdateQty(item._id, item.quantity + 1)}
+                          onClick={() => onUpdateQty(item._id || item.id, item.quantity + 1)}
                           className="p-1 hover:bg-slate-200 text-slate-600 rounded-r"
                         >
                           <Plus className="w-3 h-3" />
@@ -174,8 +170,8 @@ export default function CartDrawer({
                       </div>
 
                       <button
-                        onClick={() => onRemoveItem(item._id)}
-                        className="text-slate-400 hover:text-rose-600 transition-colors p-1"
+                        onClick={() => onRemoveItem(item._id || item.id)}
+                        className="text-slate-400 hover:text-red-600 transition-colors p-1"
                         title="Remove"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
@@ -188,7 +184,7 @@ export default function CartDrawer({
           )}
         </div>
 
-        {/* Footer & Checkout button */}
+        {/* Footer */}
         {cartItems.length > 0 && (
           <div className="p-4 sm:p-5 border-t border-slate-200 bg-slate-50 space-y-3">
             <div className="space-y-1.5 text-xs">
@@ -198,19 +194,19 @@ export default function CartDrawer({
               </div>
               {totalSavings > 0 && (
                 <div className="flex justify-between text-emerald-600 font-semibold">
-                  <span>Total Savings</span>
+                  <span>Savings</span>
                   <span>-₹{totalSavings.toLocaleString()}</span>
                 </div>
               )}
               <div className="flex justify-between text-slate-500">
-                <span>Shipping Fee</span>
+                <span>Shipping</span>
                 <span className="font-semibold text-slate-800">
-                  {isFreeShipping ? 'FREE' : '₹99'}
+                  {isFreeShipping ? 'FREE' : 'Calculated at checkout'}
                 </span>
               </div>
               <div className="flex justify-between text-base font-black text-slate-900 pt-1 border-t border-slate-200">
-                <span>Grand Total</span>
-                <span>₹{(subtotal + (isFreeShipping ? 0 : 99)).toLocaleString()}</span>
+                <span>Total</span>
+                <span>₹{subtotal.toLocaleString()}</span>
               </div>
             </div>
 
@@ -220,20 +216,20 @@ export default function CartDrawer({
                   onClose();
                   onProceedToCheckout();
                 }}
-                className="w-full flex items-center justify-center gap-2 py-3 bg-rose-600 hover:bg-rose-700 active:scale-98 text-white font-bold rounded-xl text-sm shadow-md shadow-rose-200 transition-all"
+                className="w-full flex items-center justify-center gap-2 py-3 bg-brand-700 hover:bg-brand-800 active:scale-98 text-white font-bold rounded-xl text-sm shadow-md shadow-brand-200 transition-all"
               >
                 <span>Proceed to Checkout</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 
               <a
-                href={`https://wa.me/919876543210?text=${generateWhatsAppMessage()}`}
+                href={`https://wa.me/919966335074?text=${generateWhatsAppMessage()}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full flex items-center justify-center gap-2 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl text-xs shadow-sm transition-all"
+                className="w-full flex items-center justify-center gap-2 py-2.5 bg-[#25D366] hover:bg-[#20ba59] text-white font-semibold rounded-xl text-xs shadow-sm transition-all"
               >
                 <MessageCircle className="w-4 h-4" />
-                <span>Quick WhatsApp Order</span>
+                <span>Order via WhatsApp</span>
               </a>
             </div>
           </div>

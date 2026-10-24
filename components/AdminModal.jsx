@@ -8,11 +8,7 @@ import {
   Package,
   ShoppingBag,
   Database,
-  CheckCircle,
-  Clock,
-  Truck,
   Loader2,
-  Sparkles,
 } from 'lucide-react';
 import {
   createProduct,
@@ -24,14 +20,14 @@ import {
 } from '../api';
 
 const CATEGORIES = [
-  'Skin Care',
   'Hair Care',
+  'Hair Color & Treatment',
   'Makeup',
-  'Barber & Grooming',
-  'Professional Equipment',
+  'Salon Furniture',
+  'Skin Care',
   'Waxing',
-  'Fragrance',
-  'Bath & Body',
+  'Professional Equipment',
+  'Barber Supplies',
 ];
 
 export default function AdminModal({
@@ -41,18 +37,17 @@ export default function AdminModal({
   onRefreshProducts,
   dbStatus,
 }) {
-  const [activeTab, setActiveTab] = useState('products'); // 'products' | 'orders' | 'add'
+  const [activeTab, setActiveTab] = useState('products');
   const [orders, setOrders] = useState([]);
   const [loadingOrders, setLoadingOrders] = useState(false);
   const [actionLoading, setActionLoading] = useState(false);
   const [statusMessage, setStatusMessage] = useState('');
 
-  // Form state for creating / editing
   const [editingId, setEditingId] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
     brand: '',
-    category: 'Skin Care',
+    category: 'Hair Care',
     subcategory: '',
     price: '',
     mrp: '',
@@ -60,8 +55,8 @@ export default function AdminModal({
     minWholesaleQty: 3,
     stock: 50,
     rating: 4.8,
-    reviewCount: 25,
-    volumeOrWeight: '100 ml',
+    reviewCount: 5,
+    volumeOrWeight: 'MOQ: 1 piece',
     image: '',
     description: '',
     isFeatured: false,
@@ -93,7 +88,7 @@ export default function AdminModal({
     setFormData({
       name: '',
       brand: '',
-      category: 'Skin Care',
+      category: 'Hair Care',
       subcategory: '',
       price: '',
       mrp: '',
@@ -101,8 +96,8 @@ export default function AdminModal({
       minWholesaleQty: 3,
       stock: 50,
       rating: 4.8,
-      reviewCount: 25,
-      volumeOrWeight: '100 ml',
+      reviewCount: 5,
+      volumeOrWeight: 'MOQ: 1 piece',
       image: '',
       description: '',
       isFeatured: false,
@@ -111,20 +106,20 @@ export default function AdminModal({
   };
 
   const handleEditClick = (p) => {
-    setEditingId(p._id);
+    setEditingId(p._id || p.id);
     setFormData({
       name: p.name || '',
       brand: p.brand || '',
-      category: p.category || 'Skin Care',
+      category: p.category || 'Hair Care',
       subcategory: p.subcategory || '',
       price: p.price || '',
       mrp: p.mrp || '',
       wholesaleTierPrice: p.wholesaleTierPrice || '',
       minWholesaleQty: p.minWholesaleQty || 3,
       stock: p.stock || 50,
-      rating: p.rating || 4.5,
-      reviewCount: p.reviewCount || 10,
-      volumeOrWeight: p.volumeOrWeight || '100 ml',
+      rating: p.rating || 4.8,
+      reviewCount: p.reviewCount || 5,
+      volumeOrWeight: p.volumeOrWeight || 'MOQ: 1 piece',
       image: p.image || '',
       description: p.description || '',
       isFeatured: !!p.isFeatured,
@@ -184,7 +179,7 @@ export default function AdminModal({
   };
 
   const handleReseedCatalog = async () => {
-    if (!window.confirm('Reset catalog to the complete 20+ cosmetics starter items?')) return;
+    if (!window.confirm('Reset catalog to the authentic Taj Traders products?')) return;
     setActionLoading(true);
     try {
       await resetSeedData();
@@ -210,17 +205,17 @@ export default function AdminModal({
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6">
       <div className="relative bg-white rounded-3xl max-w-5xl w-full shadow-2xl overflow-hidden border border-slate-200 my-8 flex flex-col max-h-[90vh]">
-        {/* Modal Top Header */}
-        <div className="p-4 sm:p-5 border-b border-slate-200 flex items-center justify-between bg-slate-900 text-white">
+        {/* Top Header */}
+        <div className="p-4 sm:p-5 border-b border-slate-200 flex items-center justify-between bg-brand-900 text-white">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-rose-600 flex items-center justify-center">
-              <Database className="w-5 h-5 text-white" />
+            <div className="w-9 h-9 rounded-xl bg-brand-700 flex items-center justify-center font-bold">
+              TT
             </div>
             <div>
               <h2 className="font-extrabold text-base sm:text-lg">
-                Taj Traders Management Portal
+                Taj Traders — Product &amp; Order Admin
               </h2>
-              <div className="flex items-center gap-2 text-xs text-slate-300">
+              <div className="flex items-center gap-2 text-xs text-brand-200">
                 <span>Database:</span>
                 <span className="inline-flex items-center gap-1 font-mono text-emerald-400 font-bold">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
@@ -232,7 +227,7 @@ export default function AdminModal({
 
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-300 transition-colors"
+            className="w-8 h-8 rounded-full bg-brand-800 hover:bg-brand-700 flex items-center justify-center text-slate-300 transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
@@ -245,17 +240,17 @@ export default function AdminModal({
               onClick={() => setActiveTab('products')}
               className={`px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-all ${
                 activeTab === 'products'
-                  ? 'bg-white text-rose-600 shadow-sm'
+                  ? 'bg-white text-brand-700 shadow-sm'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              <Package className="w-3.5 h-3.5" /> Products Catalog ({products.length})
+              <Package className="w-3.5 h-3.5" /> Products ({products.length})
             </button>
             <button
               onClick={() => setActiveTab('orders')}
               className={`px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-all ${
                 activeTab === 'orders'
-                  ? 'bg-white text-rose-600 shadow-sm'
+                  ? 'bg-white text-brand-700 shadow-sm'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -268,39 +263,27 @@ export default function AdminModal({
               }}
               className={`px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-all ${
                 activeTab === 'add'
-                  ? 'bg-rose-600 text-white shadow-sm'
+                  ? 'bg-brand-700 text-white shadow-sm'
                   : 'bg-white text-slate-700 hover:bg-slate-50'
               }`}
             >
               <Plus className="w-3.5 h-3.5" />
-              {editingId ? 'Edit Product' : 'Add New Cosmetic'}
-            </button>
-
-            <button
-              onClick={() => {
-                onClose();
-                window.location.hash = '#add-product';
-              }}
-              className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 hover:bg-amber-100 transition-colors font-bold"
-              title="Open the dedicated separate full Add Product Page"
-            >
-              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-              <span>Full Add Product Page</span>
+              {editingId ? 'Edit Product' : 'Add New Product'}
             </button>
           </div>
 
           <button
             onClick={handleReseedCatalog}
             disabled={actionLoading}
-            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-lg transition-colors font-semibold"
-            title="Reset catalog with 20+ cosmetics sample items"
+            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-brand-100 hover:bg-brand-200 text-brand-800 rounded-lg transition-colors font-semibold"
+            title="Reset catalog with authentic 24 Taj Traders items"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${actionLoading ? 'animate-spin' : ''}`} />
-            <span>Reseed Catalog</span>
+            <span>Reseed Taj Traders Catalog</span>
           </button>
         </div>
 
-        {/* Feedback message banner */}
+        {/* Status banner */}
         {statusMessage && (
           <div className="bg-emerald-50 text-emerald-800 text-xs px-6 py-2 border-b border-emerald-100 font-medium">
             {statusMessage}
@@ -309,18 +292,17 @@ export default function AdminModal({
 
         {/* Tab Body */}
         <div className="flex-1 overflow-y-auto p-4 sm:p-6">
-          {/* TAB 1: PRODUCT LIST */}
           {activeTab === 'products' && (
             <div className="space-y-3">
               <div className="flex justify-between items-center text-xs text-slate-500 pb-2">
-                <span>Manage existing cosmetics, prices, stock and discounts:</span>
+                <span>Manage Taj Traders cosmetics, salon equipment &amp; pricing:</span>
                 <span className="font-bold text-slate-700">{products.length} Products Found</span>
               </div>
 
               <div className="divide-y divide-slate-100 border border-slate-200 rounded-2xl overflow-hidden bg-white">
                 {products.map((p) => (
                   <div
-                    key={p._id}
+                    key={p._id || p.id}
                     className="p-3 sm:p-4 flex items-center justify-between gap-3 hover:bg-slate-50/70 transition-colors"
                   >
                     <div className="flex items-center gap-3 min-w-0">
@@ -331,7 +313,7 @@ export default function AdminModal({
                       />
                       <div className="min-w-0">
                         <div className="flex items-center gap-2">
-                          <span className="text-[10px] font-bold text-rose-600 uppercase">
+                          <span className="text-[10px] font-bold text-brand-700 uppercase">
                             {p.brand}
                           </span>
                           <span className="text-[10px] bg-slate-100 px-1.5 py-0.2 rounded text-slate-600">
@@ -346,10 +328,10 @@ export default function AdminModal({
                           {p.mrp && <span className="line-through text-[11px]">₹{p.mrp}</span>}
                           {p.wholesaleTierPrice && (
                             <span className="text-emerald-700 font-semibold text-[11px]">
-                              Wholesale: ₹{p.wholesaleTierPrice} (3+)
+                              Wholesale: ₹{p.wholesaleTierPrice}
                             </span>
                           )}
-                          <span>&bull; Stock: {p.stock}</span>
+                          <span>&bull; Stock: {p.stock || 50}</span>
                         </div>
                       </div>
                     </div>
@@ -357,13 +339,13 @@ export default function AdminModal({
                     <div className="flex items-center gap-2 shrink-0">
                       <button
                         onClick={() => handleEditClick(p)}
-                        className="p-2 text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
+                        className="p-2 text-slate-500 hover:text-brand-700 hover:bg-brand-50 rounded-lg transition-colors"
                         title="Edit"
                       >
                         <Edit2 className="w-4 h-4" />
                       </button>
                       <button
-                        onClick={() => handleDelete(p._id)}
+                        onClick={() => handleDelete(p._id || p.id)}
                         className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                         title="Delete"
                       >
@@ -376,14 +358,13 @@ export default function AdminModal({
             </div>
           )}
 
-          {/* TAB 2: CUSTOMER ORDERS */}
           {activeTab === 'orders' && (
             <div className="space-y-4">
               <div className="flex justify-between items-center text-xs text-slate-500">
-                <span>Customer inquiries & online orders:</span>
+                <span>Customer inquiries &amp; online orders for Taj Traders:</span>
                 <button
                   onClick={loadOrders}
-                  className="flex items-center gap-1 text-rose-600 font-bold hover:underline"
+                  className="flex items-center gap-1 text-brand-700 font-bold hover:underline"
                 >
                   <RefreshCw className="w-3.5 h-3.5" /> Refresh Orders
                 </button>
@@ -395,7 +376,7 @@ export default function AdminModal({
                 </div>
               ) : orders.length === 0 ? (
                 <div className="text-center py-12 text-slate-400 text-xs">
-                  No orders placed yet. Add items to cart and complete checkout to test order capture!
+                  No orders placed yet. Place a test order in the store to see it recorded here!
                 </div>
               ) : (
                 <div className="space-y-3">
@@ -416,12 +397,12 @@ export default function AdminModal({
 
                         <div className="flex items-center gap-2">
                           <span className="text-xs bg-slate-100 px-2 py-0.5 rounded font-bold text-slate-700">
-                            {ord.orderType || 'Retail'}
+                            {ord.orderType || 'Wholesale'}
                           </span>
                           <select
                             value={ord.status}
                             onChange={(e) => handleStatusChange(ord._id, e.target.value)}
-                            className="text-xs font-bold px-2 py-1 bg-rose-50 text-rose-700 border border-rose-200 rounded-lg outline-none"
+                            className="text-xs font-bold px-2 py-1 bg-brand-50 text-brand-700 border border-brand-200 rounded-lg outline-none"
                           >
                             <option value="Pending">Pending</option>
                             <option value="Confirmed">Confirmed</option>
@@ -445,17 +426,16 @@ export default function AdminModal({
                         </div>
 
                         <div>
-                          <p className="text-slate-500">Payment & Total:</p>
+                          <p className="text-slate-500">Payment &amp; Total:</p>
                           <p className="font-bold text-slate-800">
-                            {ord.paymentMethod} &bull; Total: <span className="text-rose-600 font-extrabold text-sm">₹{ord.totalAmount?.toLocaleString()}</span>
+                            {ord.paymentMethod} &bull; Total: <span className="text-brand-700 font-extrabold text-sm">₹{ord.totalAmount?.toLocaleString()}</span>
                           </p>
                           <p className="text-slate-500 text-[11px]">
-                            Items: {ord.items?.length || 0} cosmetic products
+                            Items: {ord.items?.length || 0} products
                           </p>
                         </div>
                       </div>
 
-                      {/* Items Mini List */}
                       <div className="bg-slate-50 p-2.5 rounded-xl space-y-1 text-xs">
                         {ord.items?.map((it, idx) => (
                           <div key={idx} className="flex justify-between text-slate-700">
@@ -473,11 +453,10 @@ export default function AdminModal({
             </div>
           )}
 
-          {/* TAB 3: ADD / EDIT PRODUCT */}
           {activeTab === 'add' && (
             <form onSubmit={handleSaveProduct} className="space-y-4 max-w-2xl mx-auto">
               <h3 className="text-sm font-bold text-slate-900 border-b pb-2">
-                {editingId ? 'Edit Cosmetic Product' : 'Add New Cosmetic to Inventory'}
+                {editingId ? 'Edit Product' : 'Add New Product to Taj Traders'}
               </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
@@ -488,10 +467,10 @@ export default function AdminModal({
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Pure Moroccan Argan Oil Nourishing Serum"
+                    placeholder="e.g. Professional Barber Continuous Spray Bottle"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-rose-500 focus:bg-white"
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-brand-600 focus:bg-white"
                   />
                 </div>
 
@@ -502,10 +481,10 @@ export default function AdminModal({
                   <input
                     type="text"
                     required
-                    placeholder="e.g. L'Oréal Pro / O3+ / Streax"
+                    placeholder="e.g. Grandeur Salon Equipment"
                     value={formData.brand}
                     onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
-                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-rose-500 focus:bg-white"
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-brand-600 focus:bg-white"
                   />
                 </div>
 
@@ -516,7 +495,7 @@ export default function AdminModal({
                   <select
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-rose-500 focus:bg-white font-semibold"
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-brand-600 focus:bg-white font-semibold"
                   >
                     {CATEGORIES.map((cat) => (
                       <option key={cat} value={cat}>
@@ -528,41 +507,15 @@ export default function AdminModal({
 
                 <div>
                   <label className="block text-slate-700 font-bold mb-1">
-                    Subcategory
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="e.g. Serums / Facial Kits / Lipsticks"
-                    value={formData.subcategory}
-                    onChange={(e) => setFormData({ ...formData, subcategory: e.target.value })}
-                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-rose-500 focus:bg-white"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-slate-700 font-bold mb-1">
-                    Volume / Pack Size
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="e.g. 100 ml / 500 ml Salon Pack"
-                    value={formData.volumeOrWeight}
-                    onChange={(e) => setFormData({ ...formData, volumeOrWeight: e.target.value })}
-                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-rose-500 focus:bg-white"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-slate-700 font-bold mb-1">
                     Selling Price (₹) *
                   </label>
                   <input
                     type="number"
                     required
-                    placeholder="e.g. 599"
+                    placeholder="850"
                     value={formData.price}
                     onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-rose-500 focus:bg-white"
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-brand-600 focus:bg-white"
                   />
                 </div>
 
@@ -573,10 +526,10 @@ export default function AdminModal({
                   <input
                     type="number"
                     required
-                    placeholder="e.g. 899"
+                    placeholder="1700"
                     value={formData.mrp}
                     onChange={(e) => setFormData({ ...formData, mrp: e.target.value })}
-                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-rose-500 focus:bg-white"
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-brand-600 focus:bg-white"
                   />
                 </div>
 
@@ -586,10 +539,10 @@ export default function AdminModal({
                   </label>
                   <input
                     type="number"
-                    placeholder="e.g. 450"
+                    placeholder="720"
                     value={formData.wholesaleTierPrice}
                     onChange={(e) => setFormData({ ...formData, wholesaleTierPrice: e.target.value })}
-                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-rose-500 focus:bg-white"
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-brand-600 focus:bg-white"
                   />
                 </div>
 
@@ -601,7 +554,7 @@ export default function AdminModal({
                     type="number"
                     value={formData.stock}
                     onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
-                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-rose-500 focus:bg-white"
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-brand-600 focus:bg-white"
                   />
                 </div>
 
@@ -612,10 +565,10 @@ export default function AdminModal({
                   <input
                     type="url"
                     required
-                    placeholder="https://images.unsplash.com/..."
+                    placeholder="https://res.cloudinary.com/..."
                     value={formData.image}
                     onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-rose-500 focus:bg-white"
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-brand-600 focus:bg-white"
                   />
                 </div>
 
@@ -626,10 +579,10 @@ export default function AdminModal({
                   <textarea
                     rows={3}
                     required
-                    placeholder="Describe benefits, application, and formula..."
+                    placeholder="Commercial salon grade description..."
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-rose-500 focus:bg-white"
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-brand-600 focus:bg-white"
                   />
                 </div>
               </div>
@@ -648,7 +601,7 @@ export default function AdminModal({
                 <button
                   type="submit"
                   disabled={actionLoading}
-                  className="px-6 py-2 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl text-xs shadow-md transition-all disabled:opacity-50"
+                  className="px-6 py-2 bg-brand-700 hover:bg-brand-800 text-white font-bold rounded-xl text-xs shadow-md transition-all disabled:opacity-50"
                 >
                   {actionLoading ? 'Saving...' : editingId ? 'Update Product' : 'Add Product'}
                 </button>

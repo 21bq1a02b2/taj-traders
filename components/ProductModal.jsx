@@ -19,12 +19,11 @@ export default function ProductModal({ product, onClose, onAddToCart }) {
   if (!product) return null;
 
   const discount =
-    product.discountPercentage ||
+    product.discount ||
     (product.mrp && product.price
       ? Math.round(((product.mrp - product.price) / product.mrp) * 100)
       : 0);
 
-  // If user orders wholesale qty or more, use wholesale rate
   const isWholesaleQualifying =
     product.wholesaleTierPrice && qty >= (product.minWholesaleQty || 3);
   const currentUnitPrice = isWholesaleQualifying
@@ -33,7 +32,7 @@ export default function ProductModal({ product, onClose, onAddToCart }) {
   const totalPrice = currentUnitPrice * qty;
 
   const whatsappMessage = encodeURIComponent(
-    `Hello, I would like to order ${qty} unit(s) of "${product.name}" (${product.brand}). Price: ₹${totalPrice}. Please confirm availability.`
+    `Hello Taj Traders, I would like to order ${qty} unit(s) of "${product.name}" (${product.brand}). Price: ₹${totalPrice}. Please confirm availability and delivery.`
   );
 
   return (
@@ -48,16 +47,16 @@ export default function ProductModal({ product, onClose, onAddToCart }) {
         </button>
 
         <div className="grid grid-cols-1 md:grid-cols-2">
-          {/* Image & Badges */}
+          {/* Image */}
           <div className="p-6 md:p-8 bg-slate-50 flex flex-col justify-center items-center relative border-b md:border-b-0 md:border-r border-slate-200">
-            <div className="relative w-full max-w-sm aspect-square rounded-2xl overflow-hidden shadow-inner bg-white p-2">
+            <div className="relative w-full max-w-sm aspect-[4/3] rounded-2xl overflow-hidden shadow-inner bg-white p-2">
               <img
                 src={product.image}
                 alt={product.name}
                 className="w-full h-full object-cover rounded-xl"
               />
               {discount > 0 && (
-                <span className="absolute top-4 left-4 bg-rose-600 text-white text-xs font-extrabold px-2.5 py-1 rounded-md shadow-md">
+                <span className="absolute top-4 left-4 inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ring-1 ring-inset bg-red-50 text-red-700 ring-red-200 shadow-sm">
                   {discount}% OFF
                 </span>
               )}
@@ -65,23 +64,23 @@ export default function ProductModal({ product, onClose, onAddToCart }) {
 
             <div className="mt-4 flex items-center gap-4 text-xs text-slate-500">
               <span className="flex items-center gap-1">
-                <Truck className="w-4 h-4 text-emerald-500" /> Fast Pan-India Dispatch
+                <Truck className="w-4 h-4 text-brand-600" /> Pan-India Delivery
               </span>
               <span className="flex items-center gap-1">
-                <ShieldCheck className="w-4 h-4 text-blue-500" /> 100% Original
+                <ShieldCheck className="w-4 h-4 text-emerald-600" /> 100% Genuine
               </span>
             </div>
           </div>
 
-          {/* Product Details & Actions */}
+          {/* Details */}
           <div className="p-6 md:p-8 flex flex-col justify-between space-y-4 max-h-[85vh] overflow-y-auto">
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 bg-rose-100 text-rose-700 text-xs font-bold rounded uppercase tracking-wider">
+                <span className="px-2 py-0.5 bg-brand-50 text-brand-700 text-xs font-bold rounded uppercase tracking-wider">
                   {product.brand}
                 </span>
                 <span className="text-xs text-slate-400">
-                  {product.category} &bull; {product.volumeOrWeight}
+                  {product.category} &bull; {product.volumeOrWeight || `MOQ: ${product.moq || 1} piece`}
                 </span>
               </div>
 
@@ -92,17 +91,17 @@ export default function ProductModal({ product, onClose, onAddToCart }) {
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-1 bg-amber-50 px-2.5 py-1 rounded-md text-amber-900 text-xs font-bold">
                   <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-500" />
-                  <span>{product.rating || 4.5}</span>
+                  <span>{(product.rating || 4.8).toFixed(1)}</span>
                   <span className="text-slate-400 font-normal">
-                    ({product.reviewCount || 18} reviews)
+                    ({product.reviewCount || 3} reviews)
                   </span>
                 </div>
                 <span className="text-xs text-emerald-600 font-semibold flex items-center gap-1">
-                  <Check className="w-3.5 h-3.5" /> In Stock & Ready to Ship
+                  <Check className="w-3.5 h-3.5" /> In Stock &amp; Ready to Dispatch
                 </span>
               </div>
 
-              {/* Price block */}
+              {/* Price */}
               <div className="pt-2">
                 <div className="flex items-baseline gap-3">
                   <span className="text-2xl md:text-3xl font-black text-slate-900">
@@ -114,74 +113,72 @@ export default function ProductModal({ product, onClose, onAddToCart }) {
                     </span>
                   )}
                   {discount > 0 && (
-                    <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">
-                      Save ₹{product.mrp - currentUnitPrice}
+                    <span className="text-xs font-bold text-red-700 bg-red-50 px-2 py-0.5 rounded">
+                      {discount}% OFF
                     </span>
                   )}
                 </div>
 
-                {/* Wholesale Tier callout */}
                 {product.wholesaleTierPrice && (
                   <div
                     className={`mt-2 p-2.5 rounded-xl border text-xs flex items-center justify-between ${
                       isWholesaleQualifying
                         ? 'bg-emerald-50 border-emerald-300 text-emerald-900'
-                        : 'bg-rose-50/70 border-rose-200 text-rose-900'
+                        : 'bg-brand-50 border-brand-200 text-brand-900'
                     }`}
                   >
                     <div className="flex items-center gap-1.5">
-                      <Tag className="w-4 h-4 text-rose-600 shrink-0" />
+                      <Tag className="w-4 h-4 text-brand-700 shrink-0" />
                       <span>
-                        <strong>Wholesale Price: ₹{product.wholesaleTierPrice}/unit</strong>{' '}
+                        <strong>Wholesale Tier: ₹{product.wholesaleTierPrice}/unit</strong>{' '}
                         (Min {product.minWholesaleQty || 3} units)
                       </span>
                     </div>
                     {isWholesaleQualifying && (
                       <span className="bg-emerald-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
-                        APPLIED!
+                        APPLIED
                       </span>
                     )}
                   </div>
                 )}
               </div>
 
-              {/* Description */}
               <p className="text-xs md:text-sm text-slate-600 pt-1 leading-relaxed">
                 {product.description}
               </p>
 
-              {/* Tabs for Info */}
+              {/* Tabs */}
               <div className="pt-2">
                 <div className="flex border-b border-slate-200 text-xs font-semibold">
                   <button
                     onClick={() => setActiveTab('benefits')}
                     className={`pb-2 px-3 border-b-2 transition-colors ${
                       activeTab === 'benefits'
-                        ? 'border-rose-600 text-rose-600'
+                        ? 'border-brand-700 text-brand-700'
                         : 'border-transparent text-slate-500 hover:text-slate-800'
                     }`}
                   >
-                    Key Benefits
+                    Key Features
                   </button>
                   <button
                     onClick={() => setActiveTab('usage')}
                     className={`pb-2 px-3 border-b-2 transition-colors ${
                       activeTab === 'usage'
-                        ? 'border-rose-600 text-rose-600'
+                        ? 'border-brand-700 text-brand-700'
                         : 'border-transparent text-slate-500 hover:text-slate-800'
                     }`}
                   >
-                    How to Use
+                    Usage
                   </button>
                   <button
-                    onClick={() => setActiveTab('ingredients')}
+                    onClick={() => setActiveTab('specs')}
                     className={`pb-2 px-3 border-b-2 transition-colors ${
-                      activeTab === 'ingredients'
-                        ? 'border-rose-600 text-rose-600'
+                      activeTab === 'specs'
+                        ? 'border-brand-700 text-brand-700'
                         : 'border-transparent text-slate-500 hover:text-slate-800'
                     }`}
                   >
-                    Ingredients
+                    Specs &amp; Invoicing
                   </button>
                 </div>
 
@@ -191,25 +188,25 @@ export default function ProductModal({ product, onClose, onAddToCart }) {
                       {product.benefits && product.benefits.length > 0 ? (
                         product.benefits.map((b, i) => <li key={i}>{b}</li>)
                       ) : (
-                        <li>Dermatologically tested salon-grade formula.</li>
+                        <li>Commercial salon-grade durability and performance.</li>
                       )}
                     </ul>
                   )}
 
                   {activeTab === 'usage' && (
-                    <p>{product.howToUse || 'Apply as recommended for professional beauty results.'}</p>
+                    <p>{product.howToUse || 'Use as recommended for salon and professional treatments.'}</p>
                   )}
 
-                  {activeTab === 'ingredients' && (
-                    <p className="font-mono text-[11px] bg-slate-50 p-2 rounded border border-slate-200">
-                      {product.ingredients || 'Natural extracts, active ingredients, and botanical oils.'}
+                  {activeTab === 'specs' && (
+                    <p className="bg-slate-50 p-2 rounded border border-slate-200">
+                      GST Invoicing available with HSN Code for salon input tax credit (ITC).
                     </p>
                   )}
                 </div>
               </div>
             </div>
 
-            {/* Quantity Selector & Checkout Actions */}
+            {/* Actions */}
             <div className="pt-3 border-t border-slate-200 space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-slate-700">Select Quantity:</span>
@@ -236,20 +233,20 @@ export default function ProductModal({ product, onClose, onAddToCart }) {
                     onAddToCart(product, qty);
                     onClose();
                   }}
-                  className="flex items-center justify-center gap-2 py-3 px-4 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl text-sm shadow-md shadow-rose-200 active:scale-95 transition-all"
+                  className="flex items-center justify-center gap-2 py-3 px-4 bg-brand-700 hover:bg-brand-800 text-white font-bold rounded-xl text-sm shadow-md shadow-brand-200 active:scale-95 transition-all"
                 >
                   <ShoppingBag className="w-4 h-4" />
                   Add {qty} to Cart (₹{totalPrice.toLocaleString()})
                 </button>
 
                 <a
-                  href={`https://wa.me/919876543210?text=${whatsappMessage}`}
+                  href={`https://wa.me/919966335074?text=${whatsappMessage}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 py-3 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-sm shadow-md shadow-emerald-200 transition-all"
+                  className="flex items-center justify-center gap-2 py-3 px-4 bg-[#25D366] hover:bg-[#20ba59] text-white font-bold rounded-xl text-sm shadow-md transition-all"
                 >
                   <MessageCircle className="w-4 h-4" />
-                  Order on WhatsApp
+                  WhatsApp Order
                 </a>
               </div>
             </div>

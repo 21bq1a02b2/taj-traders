@@ -4,18 +4,30 @@
 
 @layer base {
   body {
-    @apply bg-slate-50 text-slate-900 antialiased font-sans selection:bg-rose-500 selection:text-white;
+    @apply bg-white text-slate-900 antialiased font-sans selection:bg-brand-600 selection:text-white;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  .input-base {
+    @apply block w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:border-brand-600 focus:outline-none focus:ring-1 focus:ring-brand-600;
+  }
+  .link-muted {
+    @apply text-slate-600 hover:text-slate-900 transition-colors;
   }
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #f8fafc;
 }
 
 ::-webkit-scrollbar-thumb {

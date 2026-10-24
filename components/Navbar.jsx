@@ -1,337 +1,276 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
-  Search,
-  ShoppingBag,
-  Heart,
-  Settings,
-  Sparkles,
-  X,
-  Plus,
-  User,
-  LogOut,
-  ChevronDown,
-  Store,
-  Building,
-  ShieldCheck,
-  ShieldAlert,
-  UserPlus,
-  LayoutDashboard,
+  Menu, Search, User, ShoppingCart, ChevronDown, X, LogOut, Settings,
 } from 'lucide-react';
+
+const CATEGORIES = [
+  { name: 'Hair Care' },
+  { name: 'Hair Color & Treatment' },
+  { name: 'Makeup' },
+  { name: 'Salon Furniture' },
+  { name: 'Skin Care' },
+  { name: 'Waxing' },
+  { name: 'Professional Equipment' },
+  { name: 'Barber Supplies' },
+];
 
 export default function Navbar({
   searchTerm,
   setSearchTerm,
   cartCount,
-  wishlistCount,
   onOpenCart,
-  onOpenAdmin,
-  dbStatus,
-  currentUser,
-  activePortal, // 'user' | 'admin'
-  currentView,
-  onNavigateToUserDashboard,
-  onNavigateToAdminPortal,
-  onNavigateToRegister,
-  onNavigateToLogin,
-  onLogout,
+  user,
+  onSignOut,
 }) {
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const userMenuRef = useRef(null);
-  const isAdmin = currentUser?.role === 'admin';
+  const [categoriesOpen, setCategoriesOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  // Close user menu on outside click
-  useEffect(() => {
-    const handleOutsideClick = (e) => {
-      if (userMenuRef.current && !userMenuRef.current.contains(e.target)) {
-        setUserMenuOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleOutsideClick);
-    return () => document.removeEventListener('mousedown', handleOutsideClick);
-  }, []);
+  const isActive = (path) => location.pathname === path;
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    navigate('/products');
+  };
+
+  const handleCategorySelect = (catName) => {
+    setCategoriesOpen(false);
+    setMobileMenuOpen(false);
+    navigate(`/products?category=${encodeURIComponent(catName)}`);
+  };
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20 gap-3 sm:gap-4">
-          {/* Logo & Brand: Taj Traders */}
-          <div
-            onClick={activePortal === 'admin' ? onNavigateToAdminPortal : onNavigateToUserDashboard}
-            className="flex items-center gap-3 cursor-pointer select-none group shrink-0"
+    <header className="sticky top-0 z-40 bg-white shadow-sm">
+      {/* Main Header Row */}
+      <div className="container-page flex h-[72px] items-center gap-3">
+        {/* Mobile menu trigger */}
+        <button
+          type="button"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-slate-700 hover:bg-slate-100 lg:hidden"
+          aria-label="Open menu"
+        >
+          {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
+
+        {/* Brand Logo */}
+        <Link to="/" className="group flex items-center gap-2.5">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-700 text-sm font-bold text-white shadow-sm">
+            TT
+          </span>
+          <span className="flex flex-col leading-none">
+            <span className="text-[15px] font-semibold tracking-tight text-slate-900">Taj Traders</span>
+            <span className="mt-0.5 text-[10px] font-medium uppercase tracking-wider text-slate-500">
+              Salon &amp; Parlour Supplies
+            </span>
+          </span>
+        </Link>
+
+        {/* Center Search Bar */}
+        <form onSubmit={handleSearchSubmit} className="relative mx-auto hidden max-w-xl flex-1 lg:flex">
+          <input
+            type="search"
+            placeholder="Search products, brands, categories..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="h-10 w-full rounded-l-xl border border-r-0 border-slate-300 py-2 pl-4 pr-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-600 focus:outline-none"
+          />
+          <button
+            type="submit"
+            className="flex w-14 items-center justify-center rounded-r-xl bg-brand-700 text-white transition-colors hover:bg-brand-800"
+            aria-label="Search"
           >
-            <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-rose-600 via-pink-600 to-amber-400 flex items-center justify-center text-white shadow-md shadow-rose-200 group-hover:scale-105 transition-transform">
-              <Sparkles className="w-6 h-6 animate-pulse" />
-            </div>
-            <div>
-              <div className="flex items-center gap-1.5">
-                <span className="font-extrabold text-2xl tracking-tight text-slate-900 uppercase">
-                  Taj Traders
-                </span>
-                <span
-                  className={`text-[10px] font-extrabold px-1.5 py-0.5 rounded tracking-wider uppercase ${
-                    activePortal === 'admin'
-                      ? 'bg-slate-900 text-amber-300'
-                      : 'bg-rose-100 text-rose-700'
-                  }`}
-                >
-                  {activePortal === 'admin' ? 'ADMIN' : 'PRO'}
-                </span>
-              </div>
-              <p className="text-[11px] text-slate-500 font-semibold tracking-wide flex items-center gap-1">
-                {activePortal === 'admin' ? (
-                  <span className="text-amber-700 font-bold">🛡️ Store Admin Portal</span>
-                ) : (
-                  <span>Cosmetics & Salon Supplies</span>
-                )}
-              </p>
-            </div>
-          </div>
+            <Search className="h-4 w-4" />
+          </button>
+        </form>
 
-          {/* Navigation Links based on Active Portal */}
-          <nav className="hidden lg:flex items-center gap-2 pl-2">
-            {activePortal === 'admin' ? (
-              /* Admin Portal Navigation (Admin Only) */
-              <>
-                <button
-                  onClick={onNavigateToAdminPortal}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                    currentView === 'admin'
-                      ? 'bg-slate-900 text-white shadow-sm'
-                      : 'text-slate-700 hover:bg-slate-100'
-                  }`}
-                >
-                  <ShieldCheck className="w-4 h-4 text-rose-400" />
-                  <span>Admin Studio</span>
-                </button>
+        {/* Right Action Icons */}
+        <div className="ml-auto flex items-center gap-1 lg:ml-0">
+          {/* WhatsApp */}
+          <a
+            href="https://wa.me/919966335074?text=Hello%20Taj%20Traders%2C%20I%27d%20like%20to%20enquire%20about%20your%20products."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden h-10 items-center gap-2 rounded-lg px-2.5 text-sm font-medium text-slate-700 hover:bg-slate-100 xl:inline-flex"
+            title="WhatsApp"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5 text-[#25D366]">
+              <path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.06 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.62.71.22 1.36.19 1.87.12.57-.08 1.76-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35z M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.37 5.07L2 22l5.07-1.34C8.45 21.52 10.19 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.67 0-3.22-.49-4.52-1.33l-.32-.19-3.02.79.82-2.96-.21-.34C3.49 15.21 3 13.67 3 12c0-4.96 4.04-9 9-9s9 4.04 9 9-4.04 9-9 9z" />
+            </svg>
+            <span className="text-xs">WhatsApp</span>
+          </a>
 
-                {/* ADMIN ONLY ADDS PRODUCTS */}
-                <button
-                  onClick={onNavigateToAdminPortal}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white transition-all shadow-xs"
-                  title="Only Admins can add products"
-                >
-                  <Plus className="w-4 h-4" />
-                  <span>+ Add Product (Admin Only)</span>
-                </button>
-
-                <button
-                  onClick={onNavigateToUserDashboard}
-                  className="flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100"
-                >
-                  <Store className="w-3.5 h-3.5 text-slate-400" />
-                  <span>Customer View</span>
-                </button>
-              </>
-            ) : (
-              /* Customer Portal Navigation (View & Buy) */
-              <>
-                <button
-                  onClick={onNavigateToUserDashboard}
-                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                    currentView === 'dashboard'
-                      ? 'text-rose-600 bg-rose-50'
-                      : 'text-slate-700 hover:text-slate-900 hover:bg-slate-100'
-                  }`}
-                >
-                  <LayoutDashboard className="w-4 h-4 text-rose-500" />
-                  <span>User Dashboard & Shop</span>
-                </button>
-
-                <button
-                  onClick={onNavigateToAdminPortal}
-                  className="flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-500 hover:text-slate-900 hover:bg-slate-100 border border-slate-200"
-                  title="Store Administrator Access"
-                >
-                  <ShieldCheck className="w-3.5 h-3.5 text-slate-400" />
-                  <span>Admin Portal</span>
-                </button>
-              </>
-            )}
-          </nav>
-
-          {/* Search Bar (in User Portal on desktop) */}
-          {activePortal === 'user' && (
-            <div className="flex-1 max-w-md mx-2 hidden md:block">
-              <div className="relative">
-                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                <input
-                  type="text"
-                  placeholder="Search shampoos, facial kits, lipsticks, hair masks..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-9 py-2 bg-slate-100 hover:bg-slate-50 focus:bg-white text-slate-900 rounded-full text-xs font-medium border border-transparent focus:border-rose-400 focus:outline-none focus:ring-4 focus:ring-rose-100 transition-all"
-                />
-                {searchTerm && (
-                  <button
-                    onClick={() => setSearchTerm('')}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+          {/* Sign In / User */}
+          {user ? (
+            <div className="relative group">
+              <button className="inline-flex h-10 items-center gap-1.5 rounded-lg px-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-100 transition-colors border border-slate-200">
+                <User className="h-4 w-4 text-brand-700" />
+                <span className="hidden sm:inline max-w-[80px] truncate">{user.name}</span>
+                <ChevronDown className="h-3.5 w-3.5" />
+              </button>
+              {/* Dropdown */}
+              <div className="absolute right-0 top-full mt-1 w-48 rounded-xl border border-slate-200 bg-white p-2 shadow-xl z-50 hidden group-hover:block">
+                {user.role === 'admin' && (
+                  <Link
+                    to="/admin"
+                    className="flex items-center gap-2 w-full rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-700 font-medium"
                   >
-                    <X className="w-4 h-4" />
-                  </button>
+                    <Settings className="h-4 w-4" />
+                    Admin Dashboard
+                  </Link>
                 )}
+                <button
+                  onClick={onSignOut}
+                  className="flex items-center gap-2 w-full rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-red-50 hover:text-red-600 font-medium"
+                >
+                  <LogOut className="h-4 w-4" />
+                  Sign Out
+                </button>
               </div>
             </div>
+          ) : (
+            <Link
+              to="/login"
+              className="inline-flex h-10 items-center gap-1.5 rounded-lg px-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-100 transition-colors border border-slate-200"
+            >
+              <User className="h-4 w-4" />
+              <span className="hidden sm:inline">Sign In</span>
+            </Link>
           )}
 
-          {/* Right Action Controls */}
-          <div className="flex items-center gap-2 sm:gap-2.5">
-            {/* Wishlist count (User Portal) */}
-            {activePortal === 'user' && (
-              <div
-                onClick={onNavigateToUserDashboard}
-                className="relative p-2.5 text-slate-600 hover:text-rose-600 rounded-xl hover:bg-rose-50 transition-colors cursor-pointer"
-                title="Wishlist"
-              >
-                <Heart className="w-5 h-5" />
-                {wishlistCount > 0 && (
-                  <span className="absolute top-1 right-1 bg-rose-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
-                    {wishlistCount}
-                  </span>
-                )}
-              </div>
-            )}
-
-            {/* Cart Button (View and Buy) */}
-            <button
-              onClick={onOpenCart}
-              className="flex items-center gap-2 px-3.5 py-2.5 bg-rose-600 hover:bg-rose-700 active:scale-95 text-white rounded-xl shadow-sm shadow-rose-300 font-semibold text-xs sm:text-sm transition-all"
+          {/* Cart */}
+          <button
+            onClick={onOpenCart}
+            className="relative inline-flex h-10 items-center gap-2 rounded-lg px-2.5 text-sm font-medium text-slate-700 hover:bg-slate-100"
+          >
+            <ShoppingCart className="h-5 w-5" />
+            <span className="hidden lg:inline">Cart</span>
+            <span
+              className={`flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[10px] font-semibold ${
+                cartCount > 0 ? 'bg-brand-700 text-white' : 'bg-slate-200 text-slate-600'
+              }`}
             >
-              <div className="relative">
-                <ShoppingBag className="w-5 h-5" />
-                {cartCount > 0 && (
-                  <span className="absolute -top-2 -right-2.5 bg-white text-rose-600 text-[11px] font-extrabold w-4 h-4 rounded-full flex items-center justify-center shadow-xs">
-                    {cartCount}
-                  </span>
-                )}
-              </div>
-              <span className="hidden sm:inline font-bold">Cart</span>
-            </button>
-
-            {/* User Account / Portal Profile Menu */}
-            <div className="relative" ref={userMenuRef}>
-              {currentUser ? (
-                <div>
-                  <button
-                    onClick={() => setUserMenuOpen(!userMenuOpen)}
-                    className="flex items-center gap-1.5 p-1.5 sm:px-2.5 sm:py-1.5 bg-slate-100 hover:bg-slate-200 rounded-xl border border-slate-200 transition-all text-xs font-bold text-slate-800"
-                  >
-                    <div className="w-7 h-7 rounded-lg bg-rose-600 text-white flex items-center justify-center text-xs font-bold overflow-hidden">
-                      {currentUser.avatar ? (
-                        <img
-                          src={currentUser.avatar}
-                          alt={currentUser.name}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        currentUser.name?.slice(0, 1).toUpperCase() || 'U'
-                      )}
-                    </div>
-                    <span className="hidden sm:inline max-w-[90px] truncate">
-                      {currentUser.name.split(' ')[0]}
-                    </span>
-                    <ChevronDown className="w-3.5 h-3.5 text-slate-500" />
-                  </button>
-
-                  {/* Dropdown Menu */}
-                  {userMenuOpen && (
-                    <div className="absolute right-0 mt-2 w-60 bg-white rounded-2xl shadow-xl border border-slate-200 py-2 z-50 animate-in fade-in zoom-in-95">
-                      <div className="px-4 py-2 border-b border-slate-100">
-                        <p className="font-bold text-xs text-slate-900 truncate">
-                          {currentUser.name}
-                        </p>
-                        <p className="text-[11px] text-slate-500 font-mono truncate">
-                          {currentUser.email}
-                        </p>
-                        <span
-                          className={`inline-block mt-1 text-[10px] font-extrabold px-1.5 py-0.5 rounded uppercase ${
-                            currentUser.role === 'admin'
-                              ? 'bg-rose-100 text-rose-700'
-                              : 'bg-emerald-100 text-emerald-700'
-                          }`}
-                        >
-                          {currentUser.role === 'admin' ? 'Store Administrator' : 'Customer Account'}
-                        </span>
-                      </div>
-
-                      <div className="py-1 text-xs">
-                        <button
-                          onClick={() => {
-                            setUserMenuOpen(false);
-                            onNavigateToUserDashboard();
-                          }}
-                          className="w-full text-left px-4 py-2 text-slate-700 hover:bg-slate-50 flex items-center gap-2"
-                        >
-                          <LayoutDashboard className="w-4 h-4 text-rose-500" />
-                          <span>Customer Dashboard</span>
-                        </button>
-
-                        {/* Admin Only Option in Dropdown */}
-                        {currentUser.role === 'admin' ? (
-                          <button
-                            onClick={() => {
-                              setUserMenuOpen(false);
-                              onNavigateToAdminPortal();
-                            }}
-                            className="w-full text-left px-4 py-2 text-rose-600 hover:bg-rose-50 font-bold flex items-center gap-2"
-                          >
-                            <ShieldCheck className="w-4 h-4 text-rose-600" />
-                            <span>Admin Portal (+ Add Product)</span>
-                          </button>
-                        ) : null}
-
-                        <button
-                          onClick={() => {
-                            setUserMenuOpen(false);
-                            onOpenCart();
-                          }}
-                          className="w-full text-left px-4 py-2 text-slate-700 hover:bg-slate-50 flex items-center gap-2"
-                        >
-                          <ShoppingBag className="w-4 h-4 text-slate-400" />
-                          <span>My Cart & Checkout</span>
-                        </button>
-                      </div>
-
-                      <div className="pt-1 border-t border-slate-100">
-                        <button
-                          onClick={() => {
-                            setUserMenuOpen(false);
-                            onLogout();
-                          }}
-                          className="w-full text-left px-4 py-2 text-xs font-bold text-rose-600 hover:bg-rose-50 flex items-center gap-2"
-                        >
-                          <LogOut className="w-4 h-4 text-rose-600" />
-                          <span>Sign Out</span>
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ) : (
-                /* Not Logged In: "Register First / Login" */
-                <div className="flex items-center gap-1.5">
-                  <button
-                    onClick={onNavigateToRegister}
-                    className="flex items-center gap-1.5 px-3 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition-all shadow-xs"
-                    title="Register new account"
-                  >
-                    <UserPlus className="w-4 h-4" />
-                    <span>Register</span>
-                  </button>
-
-                  <button
-                    onClick={onNavigateToLogin}
-                    className="flex items-center gap-1.5 px-3 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition-all shadow-xs"
-                    title="User or Admin Login"
-                  >
-                    <User className="w-4 h-4 text-rose-400" />
-                    <span>Login</span>
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
+              {cartCount}
+            </span>
+          </button>
         </div>
       </div>
+
+      {/* Mobile search bar */}
+      <div className="container-page pb-3 lg:hidden">
+        <form onSubmit={handleSearchSubmit} className="flex w-full">
+          <input
+            type="search"
+            placeholder="Search products, brands, categories..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="h-10 w-full rounded-l-xl border border-r-0 border-slate-300 py-2 pl-4 pr-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-600 focus:outline-none"
+          />
+          <button type="submit" className="flex w-12 items-center justify-center rounded-r-xl bg-brand-700 text-white">
+            <Search className="h-4 w-4" />
+          </button>
+        </form>
+      </div>
+
+      {/* Secondary Navigation Row — Desktop */}
+      <nav className="hidden border-t border-slate-200 lg:block">
+        <div className="container-page flex h-11 items-center gap-1">
+          {/* Categories Dropdown */}
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setCategoriesOpen(!categoriesOpen)}
+              className="inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 hover:text-slate-900"
+            >
+              <span>Categories</span>
+              <ChevronDown className={`h-4 w-4 transition-transform ${categoriesOpen ? 'rotate-180' : ''}`} />
+            </button>
+            {categoriesOpen && (
+              <>
+                <div className="fixed inset-0 z-40" onClick={() => setCategoriesOpen(false)} />
+                <div className="absolute left-0 top-full mt-1 w-64 rounded-xl border border-slate-200 bg-white p-2 shadow-xl z-50">
+                  <Link
+                    to="/categories"
+                    onClick={() => setCategoriesOpen(false)}
+                    className="block w-full rounded-lg px-3 py-2 text-sm text-brand-700 hover:bg-brand-50 font-semibold border-b border-slate-100 mb-1"
+                  >
+                    All Categories →
+                  </Link>
+                  {CATEGORIES.map((c) => (
+                    <button
+                      key={c.name}
+                      onClick={() => handleCategorySelect(c.name)}
+                      className="w-full text-left rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-700 font-medium"
+                    >
+                      {c.name}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+
+          <span className="mx-2 h-5 w-px bg-slate-200" aria-hidden="true" />
+
+          {[
+            { to: '/', label: 'Home' },
+            { to: '/products', label: 'Products' },
+            { to: '/bulk-orders', label: 'Bulk Orders' },
+            { to: '/categories', label: 'New Arrivals' },
+            { to: '/products', label: 'Offers' },
+            { to: '/about', label: 'About Us' },
+            { to: '/contact', label: 'Contact Us' },
+          ].map(({ to, label }) => (
+            <Link
+              key={label}
+              to={to}
+              className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+                isActive(to) && label !== 'Offers' && label !== 'New Arrivals'
+                  ? 'bg-brand-50 text-brand-700'
+                  : 'text-slate-700 hover:bg-brand-50 hover:text-brand-700'
+              }`}
+            >
+              {label}
+            </Link>
+          ))}
+        </div>
+      </nav>
+
+      {/* Mobile Menu Dropdown */}
+      {mobileMenuOpen && (
+        <div className="border-t border-slate-200 bg-white pb-4 lg:hidden">
+          <div className="container-page space-y-1 pt-3">
+            {[
+              { to: '/', label: 'Home' },
+              { to: '/products', label: 'Products' },
+              { to: '/categories', label: 'Categories' },
+              { to: '/bulk-orders', label: 'Bulk Orders' },
+              { to: '/about', label: 'About Us' },
+              { to: '/contact', label: 'Contact Us' },
+              { to: '/login', label: 'Sign In' },
+            ].map(({ to, label }) => (
+              <Link
+                key={label}
+                to={to}
+                onClick={() => setMobileMenuOpen(false)}
+                className="block rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-brand-50 hover:text-brand-700"
+              >
+                {label}
+              </Link>
+            ))}
+            {user && (
+              <button
+                onClick={() => { onSignOut(); setMobileMenuOpen(false); }}
+                className="block w-full text-left rounded-lg px-3 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50"
+              >
+                Sign Out ({user.name})
+              </button>
+            )}
+          </div>
+        </div>
+      )}
     </header>
   );
 }
