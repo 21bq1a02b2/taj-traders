@@ -13,6 +13,7 @@ import {
   ChevronsRight,
 } from 'lucide-react';
 import { fetchProducts } from '../api';
+import { seedProducts as fallbackProducts } from '../fallbackProducts';
 
 export default function ProductsPage({
   onAddToCart,
@@ -42,7 +43,7 @@ export default function ProductsPage({
 
   // Pagination states
   const [currentPage, setCurrentPage] = useState(pageParam);
-  const [itemsPerPage, setItemsPerPage] = useState(12); // 12 items/page gives 6+ pages with 79 products!
+  const [itemsPerPage, setItemsPerPage] = useState(12); // 12 items/page with 84 products gives 7 pages!
 
   // Sync URL params into local state
   useEffect(() => {
@@ -59,16 +60,20 @@ export default function ProductsPage({
     }
   }, [pageParam]);
 
-  // Fetch all products once with limit 500
+  // Fetch all products once with limit 500, fallback to catalog if API fails/empty
   useEffect(() => {
     setLoading(true);
     fetchProducts({ limit: 500 })
       .then((res) => {
-        setProducts(res.data || []);
+        if (res.data && res.data.length > 0) {
+          setProducts(res.data);
+        } else {
+          setProducts(fallbackProducts);
+        }
       })
       .catch((err) => {
-        console.error('Failed to load products:', err);
-        setProducts([]);
+        console.warn('Backend API unavailable, using local catalog data:', err);
+        setProducts(fallbackProducts);
       })
       .finally(() => setLoading(false));
   }, []);

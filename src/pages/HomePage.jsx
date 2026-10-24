@@ -3,12 +3,19 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Search, MessageCircle, ArrowRight, ShieldCheck, Truck, Sparkles, Star, Package, Check } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
 import { fetchProducts } from '../api';
+import { seedProducts as fallbackProducts } from '../fallbackProducts';
 
 export default function HomePage({ onAddToCart, onOpenQuickView }) {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(fallbackProducts.slice(0, 8));
 
   useEffect(() => {
-    fetchProducts({}).then((res) => setProducts(res.data || [])).catch(() => {});
+    fetchProducts({})
+      .then((res) => {
+        if (res.data && res.data.length > 0) {
+          setProducts(res.data);
+        }
+      })
+      .catch(() => {});
   }, []);
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
