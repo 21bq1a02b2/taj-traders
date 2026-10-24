@@ -219,7 +219,7 @@ export default function Navbar({
             { to: '/products', label: 'Products' },
             { to: '/bulk-orders', label: 'Bulk Orders' },
             { to: '/categories', label: 'New Arrivals' },
-            { to: '/products', label: 'Offers' },
+            { to: '/offers', label: 'Offers' },
             { to: '/about', label: 'About Us' },
             { to: '/contact', label: 'Contact Us' },
           ].map(({ to, label }) => (
@@ -227,7 +227,7 @@ export default function Navbar({
               key={label}
               to={to}
               className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
-                isActive(to) && label !== 'Offers' && label !== 'New Arrivals'
+                isActive(to)
                   ? 'bg-brand-50 text-brand-700'
                   : 'text-slate-700 hover:bg-brand-50 hover:text-brand-700'
               }`}
@@ -246,6 +246,7 @@ export default function Navbar({
               { to: '/', label: 'Home' },
               { to: '/products', label: 'Products' },
               { to: '/categories', label: 'Categories' },
+              { to: '/offers', label: 'Offers' },
               { to: '/bulk-orders', label: 'Bulk Orders' },
               { to: '/about', label: 'About Us' },
               { to: '/contact', label: 'Contact Us' },

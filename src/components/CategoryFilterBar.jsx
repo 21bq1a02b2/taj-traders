@@ -4,23 +4,20 @@ import {
   Smile,
   Scissors,
   Palette,
-  UserCheck,
-  Cpu,
-  Flame,
-  Wind,
+  Heart,
   Droplets,
+  Wand2,
 } from 'lucide-react';
 
 const CATEGORY_ICONS = {
   All: Sparkles,
+  'Cosmetics': Sparkles,
+  'Makeup': Palette,
   'Skin Care': Smile,
   'Hair Care': Scissors,
-  'Makeup': Palette,
-  'Barber & Grooming': UserCheck,
-  'Professional Equipment': Cpu,
-  'Waxing': Flame,
-  'Fragrance': Wind,
+  'Hair Accessories': Heart,
   'Bath & Body': Droplets,
+  'Beauty Tools': Wand2,
 };
 
 export default function CategoryFilterBar({

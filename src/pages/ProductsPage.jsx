@@ -43,7 +43,7 @@ export default function ProductsPage({
 
   // Pagination states
   const [currentPage, setCurrentPage] = useState(pageParam);
-  const [itemsPerPage, setItemsPerPage] = useState(12); // 12 items/page with 84 products gives 7 pages!
+  const [itemsPerPage, setItemsPerPage] = useState(12); // 12 items/page gives 6 full pages with 72 products
 
   // Sync URL params into local state
   useEffect(() => {
@@ -60,7 +60,7 @@ export default function ProductsPage({
     }
   }, [pageParam]);
 
-  // Fetch all products once with limit 500, fallback to catalog if API fails/empty
+  // Fetch all products once with limit 500, with instant fallback
   useEffect(() => {
     setLoading(true);
     fetchProducts({ limit: 500 })
@@ -72,7 +72,7 @@ export default function ProductsPage({
         }
       })
       .catch((err) => {
-        console.warn('Backend API unavailable, using local catalog data:', err);
+        console.warn('API call failed, serving fallback products:', err.message);
         setProducts(fallbackProducts);
       })
       .finally(() => setLoading(false));

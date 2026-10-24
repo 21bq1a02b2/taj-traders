@@ -25,8 +25,10 @@ export default function ProductCard({
           loading="lazy"
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
           onError={(e) => {
-            e.target.src =
-              'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80';
+            // High-quality cosmetic & salon supply fallback image
+            e.currentTarget.onerror = null;
+            e.currentTarget.src =
+              'https://images.unsplash.com/photo-1522337094846-8a818192de1f?auto=format&fit=crop&w=600&q=80';
           }}
         />
 

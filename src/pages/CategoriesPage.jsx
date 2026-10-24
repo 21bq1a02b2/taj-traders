@@ -7,56 +7,56 @@ const CATEGORIES = [
     name: 'Hair Care',
     slug: 'Hair Care',
     itemCount: '11 products',
-    description: 'Salon-size professional shampoos, repair masks, deep conditioners, and therapeutic oils.',
+    description: 'Salon-size professional shampoos, repair steamers, deep conditioners, and therapeutic oils.',
     image: 'https://res.cloudinary.com/dg8z7pxju/image/upload/v1786912072/shree-gopi-traders/products/v5/professional-standing-hair-steamer-hood-dryer-machine-front-1786912072310.png',
   },
   {
     name: 'Hair Color & Treatment',
     slug: 'Hair Color & Treatment',
     itemCount: '8 products',
-    description: 'Dust-free bleach powders, developers, bond rebuilder plex solutions, and smoothening agents.',
-    image: 'https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=800&q=80',
+    description: 'Dust-free bleach powders, developers, bond rebuilder plex solutions, and permanent colors.',
+    image: 'https://images.unsplash.com/photo-1522337094846-8a818192de1f?auto=format&fit=crop&w=600&q=80',
   },
   {
     name: 'Makeup',
     slug: 'Makeup',
     itemCount: '8 products',
     description: 'Longwear liquid foundations, setting sprays, eyeshadow palettes, and liquid lipstick sets.',
-    image: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=600&q=80',
   },
   {
     name: 'Salon Furniture',
     slug: 'Salon Furniture',
     itemCount: '17 products',
-    description: 'Hydraulic styling chairs, glass top manicure tables, facial beds, and shampoo backwash stations.',
-    image: 'https://res.cloudinary.com/dg8z7pxju/image/upload/v1786912064/shree-gopi-traders/products/v5/professional-glass-top-manicure-table-desk-dust-collector-front-1786912062998.png',
+    description: 'Hydraulic styling chairs, glass top manicure tables, facial beds, and shampoo stations.',
+    image: 'https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=600&q=80',
   },
   {
     name: 'Skin Care',
     slug: 'Skin Care',
     itemCount: '27 products',
-    description: 'Salon facial kits, pure hyaluronic serums, detox charcoal peel-off masks, and moisturizers.',
-    image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=800&q=80',
+    description: 'Salon facial kits, pure hyaluronic acid hydrating serums, detox charcoal peel-off masks, and creams.',
+    image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80',
   },
   {
     name: 'Waxing',
     slug: 'Waxing',
     itemCount: '14 products',
-    description: 'Italian liposoluble stripless wax beans, dual wax warmer heaters, and soothing pre/post gels.',
-    image: 'https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?auto=format&fit=crop&w=800&q=80',
+    description: 'Black charcoal detox stripless hard wax beans, double pot digital wax heaters, and strips.',
+    image: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=600&q=80',
   },
   {
     name: 'Professional Equipment',
     slug: 'Professional Equipment',
     itemCount: '20 products',
-    description: 'Facial ozone steamers with magnifying lamps, LED ring lights, hot towel warmers, and skin scrubbers.',
+    description: '2-in-1 facial ozone steamers, 18-inch LED ring lights, hot towel warmers, and ultrasonic scrubbers.',
     image: 'https://res.cloudinary.com/dg8z7pxju/image/upload/v1786912079/shree-gopi-traders/products/v5/2-in-1-facial-ozone-steamer-magnifying-lamp-combo-station-front-1786912079553.jpg',
   },
   {
     name: 'Barber Supplies',
     slug: 'Barber Supplies',
     itemCount: '22 products',
-    description: 'Cordless barber hair clippers, zero-gap skeleton trimmers, titanium shears, and spray bottles.',
+    description: 'Cordless gold barber clippers, zero-gap skeleton trimmers, titanium shears, and mist spray bottles.',
     image: 'https://res.cloudinary.com/dg8z7pxju/image/upload/v1786912095/shree-gopi-traders/products/v5/professional-barber-continuous-spray-bottle-neck-duster-set-front-1786912095224.png',
   },
 ];
@@ -90,6 +90,10 @@ export default function CategoriesPage() {
                 <img
                   src={cat.image}
                   alt={cat.name}
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = 'https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=600&q=80';
+                  }}
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
                 <span className="absolute bottom-2.5 right-2.5 bg-white/95 backdrop-blur-sm text-slate-800 text-[11px] font-bold px-2.5 py-1 rounded-full shadow-sm">

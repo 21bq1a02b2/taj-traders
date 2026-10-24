@@ -38,7 +38,7 @@ export default function HomePage({ onAddToCart, onOpenQuickView }) {
     {
       name: 'Hair Color & Treatment',
       count: '8 products',
-      image: 'https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=600&q=80',
+      image: 'https://images.unsplash.com/photo-1522337094846-8a818192de1f?auto=format&fit=crop&w=600&q=80',
     },
     {
       name: 'Makeup',
@@ -48,17 +48,17 @@ export default function HomePage({ onAddToCart, onOpenQuickView }) {
     {
       name: 'Salon Furniture',
       count: '17 products',
-      image: 'https://res.cloudinary.com/dg8z7pxju/image/upload/v1786912064/shree-gopi-traders/products/v5/professional-glass-top-manicure-table-desk-dust-collector-front-1786912062998.png',
+      image: 'https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=600&q=80',
     },
     {
       name: 'Skin Care',
       count: '27 products',
-      image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=600&q=80',
+      image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80',
     },
     {
       name: 'Waxing',
       count: '14 products',
-      image: 'https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?auto=format&fit=crop&w=600&q=80',
+      image: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=600&q=80',
     },
     {
       name: 'Professional Equipment',
@@ -165,7 +165,7 @@ export default function HomePage({ onAddToCart, onOpenQuickView }) {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Explore Categories</h2>
-            <p className="text-sm text-slate-500 mt-1">Browse professional supplies tailored for salons, spas, and barbers</p>
+            <p className="text-sm text-slate-500 mt-1">Browse professional supplies tailored for beauty studios, salons, and parlours</p>
           </div>
           <Link
             to="/categories"
@@ -219,9 +219,9 @@ export default function HomePage({ onAddToCart, onOpenQuickView }) {
           </div>
 
           <div className="grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4">
-            {products.slice(0, 8).map((product) => (
+            {products.slice(0, 8).map((product, idx) => (
               <ProductCard
-                key={product._id || product.id}
+                key={product._id || product.id || product.slug || `home-prod-${idx}`}
                 product={product}
                 onAddToCart={onAddToCart}
                 onOpenQuickView={onOpenQuickView}

@@ -12,6 +12,7 @@ import Toast from './components/Toast';
 import HomePage from './pages/HomePage';
 import ProductsPage from './pages/ProductsPage';
 import CategoriesPage from './pages/CategoriesPage';
+import OffersPage from './pages/OffersPage';
 import BulkOrdersPage from './pages/BulkOrdersPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
@@ -37,7 +38,7 @@ function AdminRoute({ user, children }) {
 }
 
 // ─── Layout wrapper (Announcement + Navbar + Footer) ─────────────────────────
-function Layout({ children, searchTerm, setSearchTerm, cartCount, onOpenCart, user, onSignOut }) {
+function Layout({ children, searchTerm, setSearchTerm, cartCount, onOpenCart, user, onSignOut, onSelectCategory }) {
   return (
     <div className="flex min-h-screen flex-col bg-slate-50">
       <AnnouncementBar />
@@ -52,7 +53,7 @@ function Layout({ children, searchTerm, setSearchTerm, cartCount, onOpenCart, us
       <main className="flex flex-1 flex-col">
         {children}
       </main>
-      <Footer />
+      <Footer onSelectCategory={onSelectCategory || (() => {})} />
     </div>
   );
 }
@@ -177,7 +178,7 @@ function AppInner() {
               <main className="flex flex-1 flex-col">
                 <SignInPage onSignIn={handleSignIn} />
               </main>
-              <Footer />
+              <Footer onSelectCategory={() => {}} />
             </div>
           }
         />
@@ -190,7 +191,7 @@ function AppInner() {
               <main className="flex flex-1 flex-col">
                 <RegisterPage onSignIn={handleSignIn} />
               </main>
-              <Footer />
+              <Footer onSelectCategory={() => {}} />
             </div>
           }
         />
@@ -221,6 +222,14 @@ function AppInner() {
           element={
             <Layout {...layoutProps}>
               <CategoriesPage />
+            </Layout>
+          }
+        />
+        <Route
+          path="/offers"
+          element={
+            <Layout {...layoutProps}>
+              <OffersPage {...sharedProductProps} />
             </Layout>
           }
         />

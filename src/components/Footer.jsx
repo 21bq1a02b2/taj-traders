@@ -1,12 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { MessageCircle } from 'lucide-react';
 
-export default function Footer({ onSelectCategory }) {
+export default function Footer({ onSelectCategory = () => {} }) {
   const categories = [
-    'Makeup',
-    'Salon Furniture',
     'Hair Care',
     'Hair Color & Treatment',
+    'Makeup',
+    'Salon Furniture',
     'Skin Care',
     'Waxing',
     'Professional Equipment',
@@ -83,9 +84,9 @@ export default function Footer({ onSelectCategory }) {
                 </button>
               </li>
               <li>
-                <a className="link-muted" href="#offers">
+                <Link className="link-muted" to="/offers">
                   Offers
-                </a>
+                </Link>
               </li>
               <li>
                 <a className="link-muted" href="#bulk-orders">
