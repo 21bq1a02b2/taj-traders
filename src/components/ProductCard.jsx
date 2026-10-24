@@ -21,7 +21,7 @@ export default function ProductCard({
       >
         <img
           alt={product.name}
-          src={product.image}
+          src={product.image || product.imageUrl}
           loading="lazy"
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
           onError={(e) => {

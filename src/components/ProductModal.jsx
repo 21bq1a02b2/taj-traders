@@ -51,7 +51,7 @@ export default function ProductModal({ product, onClose, onAddToCart }) {
           <div className="p-6 md:p-8 bg-slate-50 flex flex-col justify-center items-center relative border-b md:border-b-0 md:border-r border-slate-200">
             <div className="relative w-full max-w-sm aspect-[4/3] rounded-2xl overflow-hidden shadow-inner bg-white p-2">
               <img
-                src={product.image}
+                src={product.image || product.imageUrl}
                 alt={product.name}
                 className="w-full h-full object-cover rounded-xl"
               />
