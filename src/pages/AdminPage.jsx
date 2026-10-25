@@ -121,6 +121,35 @@ function Pagination({ page, total, perPage, onChange }) {
 export default function AdminPage({ user, onSignOut }) {
   const navigate = useNavigate();
   const [tab, setTab] = useState('dashboard');
+  const tabHistoryRef = React.useRef(['dashboard']);
+  const ignoreNextPopRef = React.useRef(false);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      const history = tabHistoryRef.current;
+
+      if (history.length > 1) {
+        history.pop();
+        setTab(history[history.length - 1]);
+        setShowForm(false);
+        ignoreNextPopRef.current = true;
+        window.history.pushState({ adminTab: true }, '');
+      }
+    };
+
+    window.history.pushState({ adminTab: true }, '');
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const changeAdminTab = (nextTab) => {
+    if (nextTab !== tab) {
+      tabHistoryRef.current.push(nextTab);
+      setTab(nextTab);
+      setShowForm(false);
+      window.history.pushState({ adminTab: true }, '');
+    }
+  };
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -316,7 +345,7 @@ export default function AdminPage({ user, onSignOut }) {
             {TABS.map(({ key, label, icon: Icon }) => (
               <button
                 key={key}
-                onClick={() => { setTab(key); setShowForm(false); }}
+                onClick={() => changeAdminTab(key)}
                 className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition-colors ${
                   tab === key ? 'bg-brand-700 text-white' : 'text-slate-300 hover:bg-slate-700'
                 }`}
@@ -355,7 +384,7 @@ export default function AdminPage({ user, onSignOut }) {
             {TABS.map(({ key, label, icon: Icon }) => (
               <button
                 key={key}
-                onClick={() => { setTab(key); setShowForm(false); setIsMobileMenuOpen(false); }}
+                onClick={() => { changeAdminTab(key); setIsMobileMenuOpen(false); }}
                 className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${
                   tab === key ? 'bg-brand-700 text-white' : 'text-slate-300 hover:bg-slate-600'
                 }`}
