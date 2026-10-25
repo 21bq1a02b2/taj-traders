@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   X,
   Star,
@@ -15,6 +15,17 @@ import {
 export default function ProductModal({ product, onClose, onAddToCart }) {
   const [qty, setQty] = useState(1);
   const [activeTab, setActiveTab] = useState('benefits');
+
+  useEffect(() => {
+    if (!product) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [product]);
 
   if (!product) return null;
 
@@ -38,11 +49,11 @@ export default function ProductModal({ product, onClose, onAddToCart }) {
   return (
     <div
       onClick={onClose}
-      className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 cursor-pointer"
+      className="fixed inset-0 z-50 overflow-hidden overscroll-contain bg-black/60 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 cursor-pointer"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative bg-white rounded-3xl max-w-4xl w-full shadow-2xl overflow-hidden border border-slate-100 my-8 animate-in fade-in zoom-in-95 duration-200 cursor-default"
+        className="relative bg-white rounded-3xl max-w-4xl w-full max-h-[94dvh] overflow-y-auto overscroll-contain shadow-2xl border border-slate-100 my-0 animate-in fade-in zoom-in-95 duration-200 cursor-default"
       >
         {/* Close Button */}
         <button
@@ -79,7 +90,7 @@ export default function ProductModal({ product, onClose, onAddToCart }) {
           </div>
 
           {/* Details */}
-          <div className="p-6 md:p-8 flex flex-col justify-between space-y-4 max-h-[85vh] overflow-y-auto">
+          <div className="p-4 sm:p-6 md:p-8 flex flex-col justify-between space-y-4">
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <span className="px-2 py-0.5 bg-brand-50 text-brand-700 text-xs font-bold rounded uppercase tracking-wider">
@@ -237,6 +248,7 @@ export default function ProductModal({ product, onClose, onAddToCart }) {
                 <button
                   onClick={() => {
                     onAddToCart(product, qty);
+                    onClose();
                   }}
                   className="flex items-center justify-center gap-2 py-3 px-4 bg-brand-700 hover:bg-brand-800 text-white font-bold rounded-xl text-sm shadow-md shadow-brand-200 active:scale-95 transition-all"
                 >
