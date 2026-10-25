@@ -221,7 +221,7 @@ export default function AdminPage({ user, onSignOut }) {
       if (editingId) { await updateProduct(editingId, payload); showToast('Product updated!'); }
       else { await createProduct(payload); showToast('Product added!'); }
       setProductForm(EMPTY_PRODUCT); setEditingId(null); setShowForm(false); loadData();
-    } catch { showToast('Failed to save product', 'error'); }
+    } catch (error) { console.error('Product save error:', error); showToast(error.message || 'Failed to save product', 'error'); }
   };
   const handleEdit = (p) => {
     setProductForm({
