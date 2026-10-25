@@ -1,4 +1,4 @@
-const API_BASE = '/api';
+const API_BASE = 'https://taj-traders-backend.onrender.com/api';
 // 'https://taj-traders-backend.onrender.com/api';
 //  '/api'
 
