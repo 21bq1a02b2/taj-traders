@@ -248,7 +248,9 @@ export default function ProductModal({ product, onClose, onAddToCart }) {
                 <button
                   onClick={() => {
                     onAddToCart(product, qty);
-                    onClose();
+                    setTimeout(() => {
+                      onClose();
+                    }, 1000);
                   }}
                   className="flex items-center justify-center gap-2 py-3 px-4 bg-brand-700 hover:bg-brand-800 text-white font-bold rounded-xl text-sm shadow-md shadow-brand-200 active:scale-95 transition-all"
                 >
