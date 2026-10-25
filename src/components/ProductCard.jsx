@@ -50,7 +50,7 @@ export default function ProductCard({ product, onAddToCart, onOpenQuickView }) {
       {/* ── Card Body ──────────────────────────────────────────────────────── */}
       <div className="flex flex-1 flex-col p-3 sm:p-4">
         {/* Brand */}
-        <p className="truncate text-[9px] sm:text-[10px] font-semibold uppercase tracking-widest text-brand-600">
+        <p className="truncate text-[10px] sm:text-[10px] font-semibold uppercase tracking-widest text-brand-600">
           {product.brand}
         </p>
 
@@ -67,12 +67,12 @@ export default function ProductCard({ product, onAddToCart, onOpenQuickView }) {
         <div className="mt-1.5 flex items-center gap-1">
           <div className="flex">
             {[...Array(5)].map((_, i) => (
-              <svg key={i} viewBox="0 0 20 20" className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-amber-400" fill="currentColor">
+              <svg key={i} viewBox="0 0 20 20" className="h-3 w-3 sm:h-3 sm:w-3 text-amber-400" fill="currentColor">
                 <path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.5 7.7l5.9-.9L10 1.5z" />
               </svg>
             ))}
           </div>
-          <span className="text-[9px] sm:text-[10px] font-medium text-slate-500">
+          <span className="text-[10px] sm:text-[10px] font-medium text-slate-500">
             {(product.rating || 4.8).toFixed(1)} ({product.reviewCount || 3})
           </span>
         </div>
@@ -96,7 +96,7 @@ export default function ProductCard({ product, onAddToCart, onOpenQuickView }) {
 
         {/* In Stock badge */}
         <div className="mt-2">
-          <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[9px] sm:text-[10px] font-semibold text-emerald-700 ring-1 ring-emerald-200">
+          <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] sm:text-[10px] font-semibold text-emerald-700 ring-1 ring-emerald-200">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
             In Stock
           </span>
