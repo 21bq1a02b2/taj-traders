@@ -213,6 +213,7 @@ export default function AdminPage({ user, onSignOut }) {
     try {
       const payload = {
         ...productForm,
+        image: productForm.imageUrl,
         price: Number(productForm.price), mrp: Number(productForm.mrp),
         stock: Number(productForm.stock), discount: Number(productForm.discount),
         moq: Number(productForm.moq),
@@ -226,7 +227,7 @@ export default function AdminPage({ user, onSignOut }) {
     setProductForm({
       name: p.name || '', brand: p.brand || '', category: p.category || 'Hair Care',
       price: p.price || '', mrp: p.mrp || '', stock: p.stock ?? 10,
-      description: p.description || '', imageUrl: p.imageUrl || '',
+      description: p.description || '', imageUrl: p.image || p.imageUrl || '',
       discount: p.discount || 0, moq: p.moq || 1, isBestseller: p.isBestseller || false,
     });
     setEditingId(p._id || p.id); setShowForm(true); setTab('products');
@@ -1079,8 +1080,8 @@ export default function AdminPage({ user, onSignOut }) {
                           <tr key={p._id || p.id} className="hover:bg-slate-50 transition-colors">
                             <td className="py-3 px-4">
                               <div className="flex items-center gap-3">
-                                {p.imageUrl ? (
-                                  <img src={p.imageUrl} alt="" className="h-9 w-9 rounded-lg object-cover border border-slate-200 shrink-0" onError={e => { e.target.style.display = 'none'; }} />
+                                {p.image || p.imageUrl ? (
+                                  <img src={p.image || p.imageUrl} alt="" className="h-9 w-9 rounded-lg object-cover border border-slate-200 shrink-0" onError={e => { e.target.style.display = 'none'; }} />
                                 ) : (
                                   <div className="h-9 w-9 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
                                     <Package className="h-4 w-4 text-brand-400" />
