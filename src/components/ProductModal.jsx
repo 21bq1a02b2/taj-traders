@@ -36,8 +36,14 @@ export default function ProductModal({ product, onClose, onAddToCart }) {
   );
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="relative bg-white rounded-3xl max-w-4xl w-full shadow-2xl overflow-hidden border border-slate-100 my-8 animate-in fade-in zoom-in-95 duration-200">
+    <div
+      onClick={onClose}
+      className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 cursor-pointer"
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="relative bg-white rounded-3xl max-w-4xl w-full shadow-2xl overflow-hidden border border-slate-100 my-8 animate-in fade-in zoom-in-95 duration-200 cursor-default"
+      >
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -231,7 +237,6 @@ export default function ProductModal({ product, onClose, onAddToCart }) {
                 <button
                   onClick={() => {
                     onAddToCart(product, qty);
-                    onClose();
                   }}
                   className="flex items-center justify-center gap-2 py-3 px-4 bg-brand-700 hover:bg-brand-800 text-white font-bold rounded-xl text-sm shadow-md shadow-brand-200 active:scale-95 transition-all"
                 >

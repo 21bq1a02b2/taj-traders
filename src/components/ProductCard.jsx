@@ -63,16 +63,16 @@ export default function ProductCard({ product, onAddToCart, onOpenQuickView }) {
           {product.name}
         </h3>
 
-        {/* Stars — hidden on very small screens */}
-        <div className="mt-1.5 hidden sm:flex items-center gap-1">
+        {/* Stars / Ratings — visible on mobile and desktop */}
+        <div className="mt-1.5 flex items-center gap-1">
           <div className="flex">
             {[...Array(5)].map((_, i) => (
-              <svg key={i} viewBox="0 0 20 20" className="h-3 w-3 text-amber-400" fill="currentColor">
+              <svg key={i} viewBox="0 0 20 20" className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-amber-400" fill="currentColor">
                 <path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.5 7.7l5.9-.9L10 1.5z" />
               </svg>
             ))}
           </div>
-          <span className="text-[10px] text-slate-500">
+          <span className="text-[9px] sm:text-[10px] font-medium text-slate-500">
             {(product.rating || 4.8).toFixed(1)} ({product.reviewCount || 3})
           </span>
         </div>
