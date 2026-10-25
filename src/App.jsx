@@ -126,6 +126,30 @@ function AppInner() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState(null);
+  const quickViewOpenRef = React.useRef(false);
+
+  useEffect(() => {
+    if (quickViewProduct && !quickViewOpenRef.current) {
+      window.history.pushState({ productQuickView: true }, '');
+      quickViewOpenRef.current = true;
+    }
+
+    if (!quickViewProduct) {
+      quickViewOpenRef.current = false;
+    }
+  }, [quickViewProduct]);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      if (quickViewOpenRef.current) {
+        quickViewOpenRef.current = false;
+        setQuickViewProduct(null);
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   // ── Search (shared across pages) ─────────────────────────────────────────
   const [searchTerm, setSearchTerm] = useState('');
