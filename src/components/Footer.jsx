@@ -16,8 +16,8 @@ export default function Footer({ onSelectCategory = () => {} }) {
 
   return (
     <footer className="mt-auto border-t border-slate-200 bg-slate-50">
-      <div className="container-page py-12">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="px-4 sm:px-6 lg:px-8 max-w-screen-xl mx-auto py-10 sm:py-12">
+        <div className="grid gap-8 grid-cols-2 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand Info */}
           <div>
             <a className="group flex items-center gap-2.5" href="/">
@@ -151,7 +151,7 @@ export default function Footer({ onSelectCategory = () => {} }) {
 
       {/* Bottom Copyright Row */}
       <div className="border-t border-slate-200">
-        <div className="container-page flex flex-col items-center justify-between gap-2 py-5 text-xs text-slate-500 sm:flex-row">
+        <div className="px-4 sm:px-6 lg:px-8 max-w-screen-xl mx-auto flex flex-col items-center justify-between gap-2 py-5 text-xs text-slate-500 sm:flex-row">
           <p>© {new Date().getFullYear()} Taj Traders. All rights reserved.</p>
           <p>B2B salon, parlour, spa &amp; beauty supplies · GST invoicing available</p>
         </div>

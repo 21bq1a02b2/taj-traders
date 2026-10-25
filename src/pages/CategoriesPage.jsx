@@ -15,7 +15,7 @@ const CATEGORIES = [
     slug: 'Hair Color & Treatment',
     itemCount: '8 products',
     description: 'Dust-free bleach powders, developers, bond rebuilder plex solutions, and permanent colors.',
-    image: 'https://images.unsplash.com/photo-1522337094846-8a818192de1f?auto=format&fit=crop&w=600&q=80',
+    image: 'https://res.cloudinary.com/dg8z7pxju/image/upload/v1786976277/shree-gopi-traders/products/v5/violet-anti-brass-dust-free-bleaching-powder-500g-front-1786976277091.jpg',
   },
   {
     name: 'Makeup',
@@ -29,7 +29,7 @@ const CATEGORIES = [
     slug: 'Salon Furniture',
     itemCount: '17 products',
     description: 'Hydraulic styling chairs, glass top manicure tables, facial beds, and shampoo stations.',
-    image: 'https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=600&q=80',
+    image: 'https://res.cloudinary.com/dg8z7pxju/image/upload/v1786912064/shree-gopi-traders/products/v5/professional-glass-top-manicure-table-desk-dust-collector-front-1786912062998.png',
   },
   {
     name: 'Skin Care',
@@ -43,7 +43,7 @@ const CATEGORIES = [
     slug: 'Waxing',
     itemCount: '14 products',
     description: 'Black charcoal detox stripless hard wax beans, double pot digital wax heaters, and strips.',
-    image: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=600&q=80',
+    image: 'https://res.cloudinary.com/dg8z7pxju/image/upload/v1786912035/shree-gopi-traders/products/v5/black-charcoal-detox-stripless-hard-wax-beans-1kg-front-1786912035450.png',
   },
   {
     name: 'Professional Equipment',

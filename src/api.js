@@ -1,4 +1,6 @@
 const API_BASE = '/api';
+// 'https://taj-traders-backend.onrender.com/api';
+//  '/api'
 
 export const fetchProducts = async (params = {}) => {
   const query = new URLSearchParams();

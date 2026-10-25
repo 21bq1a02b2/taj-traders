@@ -25,23 +25,23 @@ export default function HeroBanner({
 
   return (
     <div className="border-b border-slate-200 bg-gradient-to-br from-brand-900 via-brand-800 to-brand-700">
-      <div className="container-page py-10 sm:py-12">
-        <h1 className="mb-1 text-2xl font-bold text-white sm:text-3xl">All Products</h1>
-        <p className="mb-6 text-sm text-brand-200">
+      <div className="container-page py-4 sm:py-8">
+        <h1 className="mb-0.5 text-xl font-bold text-white sm:text-3xl">All Products</h1>
+        <p className="mb-3 text-xs text-brand-200 sm:text-sm">
           Professional salon and parlour supplies at wholesale rates.
         </p>
 
         {/* Big Search Form */}
-        <form onSubmit={handleSubmit} className="flex max-w-2xl overflow-hidden rounded-xl shadow-lg">
-          <div className="relative flex-1">
-            <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
+        <form onSubmit={handleSubmit} className="flex w-full max-w-2xl overflow-hidden rounded-xl shadow-lg">
+          <div className="relative flex-1 min-w-0">
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400 sm:left-4 sm:h-5 sm:w-5" />
             <input
               type="search"
-              placeholder="Search products, brands, categories…"
+              placeholder="Search products, brands…"
               aria-label="Search products"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="h-14 w-full border-0 bg-white pl-11 pr-4 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-0"
+              className="h-10 w-full border-0 bg-white pl-9 pr-3 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-0 sm:h-12 sm:pl-11 sm:text-sm"
             />
           </div>
 
@@ -61,15 +61,15 @@ export default function HeroBanner({
 
           <button
             type="submit"
-            className="flex w-16 items-center justify-center bg-brand-500 text-white transition-colors hover:bg-brand-400"
+            className="flex w-11 items-center justify-center bg-brand-500 text-white transition-colors hover:bg-brand-400 shrink-0 sm:w-16"
             aria-label="Search"
           >
-            <Search className="h-5 w-5" />
+            <Search className="h-4 w-4 sm:h-5 sm:w-5" />
           </button>
         </form>
 
-        {/* Category Filter Pills */}
-        <div className="mt-4 flex flex-wrap gap-2">
+        {/* Category Filter Pills - Horizontally scrollable on mobile */}
+        <div className="mt-3 -mx-4 px-4 flex gap-1.5 overflow-x-auto no-scrollbar sm:mx-0 sm:px-0 sm:flex-wrap sm:gap-2">
           {CATEGORIES.map((c) => {
             const isSelected =
               (c.name === 'All' && selectedCategory === 'All') ||
@@ -79,9 +79,9 @@ export default function HeroBanner({
               <button
                 key={c.slug}
                 onClick={() => onSelectCategory(c.name)}
-                className={`rounded-full px-3.5 py-1.5 text-xs font-medium transition-colors ${
+                className={`shrink-0 rounded-full px-3 py-1 text-[11px] font-medium transition-colors sm:px-3.5 sm:py-1.5 sm:text-xs ${
                   isSelected
-                    ? 'bg-white text-brand-800 shadow-sm'
+                    ? 'bg-white text-brand-800 shadow-sm font-semibold'
                     : 'bg-white/10 text-white hover:bg-white/20'
                 }`}
               >

@@ -6,7 +6,7 @@ const stats = [
   { value: '127+', label: 'Products', icon: Package },
   { value: '8', label: 'Categories', icon: ShoppingBag },
   { value: '166+', label: 'Businesses Served', icon: Users },
-  { value: '5+', label: 'Years Experience', icon: Award },
+  { value: '1', label: 'Year Experience', icon: Award },
 ];
 
 const reasons = [

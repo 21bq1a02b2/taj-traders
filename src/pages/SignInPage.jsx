@@ -34,7 +34,7 @@ export default function SignInPage({ onSignIn }) {
       onSignIn({ name: name.charAt(0).toUpperCase() + name.slice(1), email: formData.email, role: 'customer' });
       navigate('/');
     } else {
-      setErrorMsg('Invalid credentials. Use admin@tajtraders.com / admin123 for admin access.');
+      setErrorMsg('Invalid email or password.');
     }
 
     setLoading(false);
@@ -63,12 +63,6 @@ export default function SignInPage({ onSignIn }) {
         </div>
 
         <div className="rounded-xl border border-slate-200 bg-white shadow-sm p-6 sm:p-8">
-          {/* Admin hint */}
-          <div className="mb-4 rounded-lg bg-brand-50 border border-brand-200 p-3 text-xs text-brand-800">
-            <span className="font-bold">Admin Login:</span> admin@tajtraders.com / admin123<br />
-            <span className="font-bold">Customer Login:</span> any email + password (4+ chars)
-          </div>
-
           {errorMsg && (
             <div className="mb-4 p-3 bg-red-50 text-red-700 text-xs rounded-lg border border-red-200">
               {errorMsg}

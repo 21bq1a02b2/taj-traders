@@ -210,15 +210,18 @@ export default function ProductsPage({
         onSelectCategory={handleCategoryChange}
       />
 
-      <div ref={productsTopRef} className="container-page py-8 sm:py-10">
+      <div ref={productsTopRef} className="container-page py-4 sm:py-8">
         {/* Mobile Filter Collapsible */}
-        <div className="mb-6 lg:hidden">
-          <details className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-            <summary className="flex cursor-pointer list-none items-center gap-2 text-sm font-medium text-slate-900">
-              <SlidersHorizontal className="h-4 w-4 text-brand-700" />
-              <span>Filters &amp; Sorting</span>
+        <div className="mb-4 lg:hidden">
+          <details className="rounded-xl border border-slate-200 bg-white p-3 shadow-sm">
+            <summary className="flex cursor-pointer list-none items-center justify-between text-xs font-semibold text-slate-800">
+              <span className="flex items-center gap-1.5">
+                <SlidersHorizontal className="h-3.5 w-3.5 text-brand-700" />
+                <span>Filters &amp; Sorting</span>
+              </span>
+              <span className="text-[11px] text-brand-700 font-medium">Tap to configure</span>
             </summary>
-            <div className="mt-4">
+            <div className="mt-3 border-t border-slate-100 pt-3">
               <SidebarFilter
                 selectedCategory={selectedCategory}
                 onSelectCategory={handleCategoryChange}
@@ -339,7 +342,7 @@ export default function ProductsPage({
             ) : (
               <>
                 {/* 4-column responsive grid matching sreegopitraders.com */}
-                <div className="grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4">
+                <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4">
                   {currentProducts.map((product) => (
                     <ProductCard
                       key={product._id || product.id}
@@ -352,9 +355,9 @@ export default function ProductsPage({
 
                 {/* ================= PAGINATION CONTROLS ================= */}
                 {totalPages > 1 && (
-                  <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-8 sm:flex-row">
+                  <div className="mt-8 sm:mt-12 flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-6 sm:pt-8 sm:flex-row">
                     {/* Left: summary info */}
-                    <p className="text-xs text-slate-500">
+                    <p className="text-xs text-slate-500 text-center sm:text-left">
                       Showing{' '}
                       <span className="font-semibold text-slate-800">{startIndex + 1}</span> to{' '}
                       <span className="font-semibold text-slate-800">{endIndex}</span> of{' '}
@@ -362,42 +365,42 @@ export default function ProductsPage({
                     </p>
 
                     {/* Middle: Pagination Buttons (Previous, Numbers, Next) */}
-                    <div className="flex items-center gap-1.5">
+                    <div className="flex flex-wrap items-center justify-center gap-1 sm:gap-1.5">
                       {/* First Page Button */}
                       <button
                         onClick={() => handlePageChange(1)}
                         disabled={currentPage === 1}
                         title="First Page"
-                        className={`inline-flex h-9 w-9 items-center justify-center rounded-lg border text-xs font-medium transition-colors ${
+                        className={`inline-flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-lg border text-xs font-medium transition-colors ${
                           currentPage === 1
                             ? 'cursor-not-allowed border-slate-200 bg-slate-50 text-slate-300'
                             : 'border-slate-300 bg-white text-slate-700 hover:bg-brand-50 hover:text-brand-700'
                         }`}
                       >
-                        <ChevronsLeft className="h-4 w-4" />
+                        <ChevronsLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                       </button>
 
                       {/* Previous Button */}
                       <button
                         onClick={() => handlePageChange(currentPage - 1)}
                         disabled={currentPage === 1}
-                        className={`inline-flex h-9 items-center gap-1 rounded-lg border px-3 text-xs font-medium transition-colors ${
+                        className={`inline-flex h-8 sm:h-9 items-center gap-1 rounded-lg border px-2 sm:px-3 text-xs font-medium transition-colors ${
                           currentPage === 1
                             ? 'cursor-not-allowed border-slate-200 bg-slate-50 text-slate-300'
                             : 'border-slate-300 bg-white text-slate-700 hover:bg-brand-50 hover:text-brand-700'
                         }`}
                       >
-                        <ChevronLeft className="h-4 w-4" />
-                        <span>Previous</span>
+                        <ChevronLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                        <span className="hidden xs:inline">Prev</span>
                       </button>
 
                       {/* Numbered Page Buttons */}
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-0.5 sm:gap-1">
                         {getPageNumbers().map((pageNum, idx) =>
                           pageNum === '...' ? (
                             <span
                               key={`ellipsis-${idx}`}
-                              className="inline-flex h-9 w-8 items-center justify-center text-xs text-slate-400"
+                              className="inline-flex h-8 w-6 sm:h-9 sm:w-8 items-center justify-center text-xs text-slate-400"
                             >
                               …
                             </span>
@@ -405,7 +408,7 @@ export default function ProductsPage({
                             <button
                               key={`page-${pageNum}`}
                               onClick={() => handlePageChange(pageNum)}
-                              className={`inline-flex h-9 min-w-9 items-center justify-center rounded-lg px-2.5 text-xs font-semibold transition-all ${
+                              className={`inline-flex h-8 min-w-8 sm:h-9 sm:min-w-9 items-center justify-center rounded-lg px-2 sm:px-2.5 text-xs font-semibold transition-all ${
                                 currentPage === pageNum
                                   ? 'bg-brand-700 text-white shadow-sm ring-2 ring-brand-700/20'
                                   : 'border border-slate-300 bg-white text-slate-700 hover:bg-brand-50 hover:text-brand-700'
@@ -421,14 +424,14 @@ export default function ProductsPage({
                       <button
                         onClick={() => handlePageChange(currentPage + 1)}
                         disabled={currentPage === totalPages}
-                        className={`inline-flex h-9 items-center gap-1 rounded-lg border px-3 text-xs font-medium transition-colors ${
+                        className={`inline-flex h-8 sm:h-9 items-center gap-1 rounded-lg border px-2 sm:px-3 text-xs font-medium transition-colors ${
                           currentPage === totalPages
                             ? 'cursor-not-allowed border-slate-200 bg-slate-50 text-slate-300'
                             : 'border-slate-300 bg-white text-slate-700 hover:bg-brand-50 hover:text-brand-700'
                         }`}
                       >
-                        <span>Next</span>
-                        <ChevronRight className="h-4 w-4" />
+                        <span className="hidden xs:inline">Next</span>
+                        <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                       </button>
 
                       {/* Last Page Button */}
@@ -436,13 +439,13 @@ export default function ProductsPage({
                         onClick={() => handlePageChange(totalPages)}
                         disabled={currentPage === totalPages}
                         title="Last Page"
-                        className={`inline-flex h-9 w-9 items-center justify-center rounded-lg border text-xs font-medium transition-colors ${
+                        className={`inline-flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-lg border text-xs font-medium transition-colors ${
                           currentPage === totalPages
                             ? 'cursor-not-allowed border-slate-200 bg-slate-50 text-slate-300'
                             : 'border-slate-300 bg-white text-slate-700 hover:bg-brand-50 hover:text-brand-700'
                         }`}
                       >
-                        <ChevronsRight className="h-4 w-4" />
+                        <ChevronsRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                       </button>
                     </div>
 
