@@ -259,7 +259,7 @@ export default function ProductModal({ product, onClose, onAddToCart }) {
                 </button>
 
                 <a
-                  href={`https://wa.me/919966335074?text=${whatsappMessage}`}
+                  href={`https://wa.me/918919733026?text=${whatsappMessage}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 py-3 px-4 bg-[#25D366] hover:bg-[#20ba59] text-white font-bold rounded-xl text-sm shadow-md transition-all"

@@ -122,17 +122,26 @@ export default function AdminPage({ user, onSignOut }) {
   const navigate = useNavigate();
   const [tab, setTab] = useState('dashboard');
   const tabHistoryRef = React.useRef(['dashboard']);
-  const ignoreNextPopRef = React.useRef(false);
+  const [productsFormOpen, setProductsFormOpen] = useState(false);
+  const productsFormOpenRef = React.useRef(false);
 
   useEffect(() => {
     const handlePopState = () => {
-      const history = tabHistoryRef.current;
+      if (productsFormOpenRef.current) {
+        productsFormOpenRef.current = false;
+        setProductsFormOpen(false);
+        setShowForm(false);
+        window.history.pushState({ adminTab: true }, '');
+        return;
+      }
 
+      const history = tabHistoryRef.current;
       if (history.length > 1) {
         history.pop();
         setTab(history[history.length - 1]);
         setShowForm(false);
-        ignoreNextPopRef.current = true;
+        window.history.pushState({ adminTab: true }, '');
+      } else {
         window.history.pushState({ adminTab: true }, '');
       }
     };
@@ -147,6 +156,8 @@ export default function AdminPage({ user, onSignOut }) {
       tabHistoryRef.current.push(nextTab);
       setTab(nextTab);
       setShowForm(false);
+      setProductsFormOpen(false);
+      productsFormOpenRef.current = false;
       window.history.pushState({ adminTab: true }, '');
     }
   };

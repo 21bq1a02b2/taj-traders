@@ -173,7 +173,7 @@ export default function BulkOrdersPage() {
                   </p>
                   <div className="pt-3">
                     <a
-                      href={`https://wa.me/919966335074?text=${whatsappMessage}`}
+                      href={`https://wa.me/918919733026?text=${whatsappMessage}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#25D366] text-white text-xs font-bold hover:bg-[#20ba59]"
@@ -317,7 +317,7 @@ export default function BulkOrdersPage() {
               </p>
               <div className="mt-4">
                 <a
-                  href="https://wa.me/919966335074?text=Hello%20Taj%20Traders%2C%20I'd%20like%20a%20bulk%20quote.%20My%20requirement%20is%3A"
+                  href="https://wa.me/918919733026?text=Hello%20Taj%20Traders%2C%20I'd%20like%20a%20bulk%20quote.%20My%20requirement%20is%3A"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex w-full items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-medium transition-colors bg-[#25D366] text-white hover:bg-[#1eb455]"

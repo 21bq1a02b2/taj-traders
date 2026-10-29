@@ -132,7 +132,7 @@ export default function HomePage({ onAddToCart, onOpenQuickView }) {
               <ArrowRight className="h-4 w-4" />
             </Link>
             <a
-              href="https://wa.me/919966335074?text=Hello%20Taj%20Traders%2C%20I'd%20like%20to%20enquire%20about%20salon%20supplies."
+              href="https://wa.me/918919733026?text=Hello%20Taj%20Traders%2C%20I'd%20like%20to%20enquire%20about%20salon%20supplies."
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-white/30 bg-white/10 backdrop-blur-sm px-6 py-3 sm:px-7 sm:py-3.5 text-xs sm:text-sm font-semibold text-white hover:bg-white/20 transition-colors"
@@ -395,7 +395,7 @@ export default function HomePage({ onAddToCart, onOpenQuickView }) {
             Chat directly with us on WhatsApp for custom quotes, product availability and doorstep delivery.
           </p>
           <a
-            href="https://wa.me/919966335074?text=Hello%20Taj%20Traders%2C%20I%27d%20like%20to%20place%20a%20bulk%20order."
+            href="https://wa.me/918919733026?text=Hello%20Taj%20Traders%2C%20I%27d%20like%20to%20place%20a%20bulk%20order."
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-xl bg-[#25D366] hover:bg-[#20ba58] px-6 py-3 text-sm font-bold text-white shadow-md shadow-emerald-200 transition-colors"
