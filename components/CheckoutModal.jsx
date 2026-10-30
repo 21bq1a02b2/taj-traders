@@ -218,7 +218,7 @@ export default function CheckoutModal({
                 <input
                   type="tel"
                   name="phone"
-                  placeholder="e.g. 9966335074"
+                  placeholder="e.g. 8919733026"
                   value={formData.phone}
                   onChange={handleChange}
                   required

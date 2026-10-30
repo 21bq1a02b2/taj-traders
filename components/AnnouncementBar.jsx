@@ -22,14 +22,14 @@ export default function AnnouncementBar() {
 
         <div className="flex shrink-0 items-center gap-4">
           <a
-            href="tel:+919966335074"
+            href="tel:+918919733026"
             className="hidden items-center gap-1.5 hover:text-brand-200 sm:flex transition-colors"
           >
             <PhoneCall className="h-3.5 w-3.5" />
-            <span className="whitespace-nowrap">+91 99663 35074</span>
+            <span className="whitespace-nowrap">+91 89197 33026</span>
           </a>
           <a
-            href="https://wa.me/919966335074?text=Hello%20Taj%20Traders%2C%20I%27d%20like%20to%20enquire%20about%20your%20products."
+            href="https://wa.me/918919733026?text=Hello%20Taj%20Traders%2C%20I%27d%20like%20to%20enquire%20about%20your%20products."
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 hover:text-brand-200 transition-colors"

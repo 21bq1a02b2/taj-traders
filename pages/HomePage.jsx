@@ -99,7 +99,7 @@ export default function HomePage({ onAddToCart, onOpenQuickView }) {
             </Link>
 
             <a
-              href="https://wa.me/919966335074?text=Hello%20Taj%20Traders%2C%20I'd%20like%20to%20enquire%20about%20salon%20supplies."
+              href="https://wa.me/918919733026?text=Hello%20Taj%20Traders%2C%20I'd%20like%20to%20enquire%20about%20salon%20supplies."
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-6 py-3.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors shadow-sm"

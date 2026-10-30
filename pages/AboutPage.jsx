@@ -63,7 +63,7 @@ export default function AboutPage() {
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a
-              href="https://wa.me/919966335074?text=Hello%20Taj%20Traders%2C%20I'd%20like%20to%20know%20more!"
+              href="https://wa.me/918919733026?text=Hello%20Taj%20Traders%2C%20I'd%20like%20to%20know%20more!"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-xl bg-[#25D366] px-6 py-3 text-sm font-semibold text-white shadow-lg hover:bg-[#20B358] transition-colors"

@@ -40,7 +40,7 @@ export default function Footer({ onSelectCategory }) {
             </p>
             <div className="mt-5 space-y-2">
               <a
-                href="https://wa.me/919966335074?text=Hello%20Taj%20Traders%2C%20I%27d%20like%20to%20enquire%20about%20your%20products."
+                href="https://wa.me/918919733026?text=Hello%20Taj%20Traders%2C%20I%27d%20like%20to%20enquire%20about%20your%20products."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-medium transition-colors border border-slate-300 bg-white text-slate-800 hover:bg-slate-50"

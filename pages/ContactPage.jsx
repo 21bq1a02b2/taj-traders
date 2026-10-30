@@ -36,8 +36,8 @@ export default function ContactPage() {
               bg: 'bg-green-50',
               title: 'WhatsApp',
               subtitle: 'Fastest response',
-              value: '+91 99663 35074',
-              href: 'https://wa.me/919966335074',
+              value: '+91 89197 33026',
+              href: 'https://wa.me/918919733026',
             },
             {
               icon: Phone,
@@ -45,8 +45,8 @@ export default function ContactPage() {
               bg: 'bg-brand-50',
               title: 'Phone',
               subtitle: 'Mon–Sat, 10am–7pm',
-              value: '+91 99663 35074',
-              href: 'tel:+919966335074',
+              value: '+91 89197 33026',
+              href: 'tel:+918919733026',
             },
             {
               icon: Mail,
@@ -104,7 +104,7 @@ export default function ContactPage() {
 
           {/* WhatsApp CTA */}
           <a
-            href="https://wa.me/919966335074?text=Hello%20Taj%20Traders%2C%20I%20have%20a%20query!"
+            href="https://wa.me/918919733026?text=Hello%20Taj%20Traders%2C%20I%20have%20a%20query!"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 w-full rounded-xl bg-[#25D366] py-3 text-sm font-semibold text-white hover:bg-[#20B358] transition-colors shadow-sm"
