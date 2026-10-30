@@ -51,12 +51,12 @@ export default function Footer({ onSelectCategory }) {
               <p className="text-xs font-medium text-slate-700">
                 WhatsApp / Call:{' '}
                 <a
-                  href="https://wa.me/919160050697"
+                  href="https://wa.me/918919733026"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-semibold text-emerald-700 hover:underline"
                 >
-                  +91 91600 50697
+                  +91 89197 33026
                 </a>
               </p>
             </div>
